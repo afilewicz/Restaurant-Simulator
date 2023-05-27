@@ -23,3 +23,13 @@ std::map<uint, Table>& Restaurant::get_tables()
 {
     return tables;
 };
+
+Kitchen& Restaurant::get_kitchen()
+{
+    return kitchen;
+};
+
+void Restaurant::add_table(Table table)
+{
+    tables[table.get_id()] = table;
+};

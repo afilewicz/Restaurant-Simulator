@@ -20,7 +20,7 @@ class Restaurant
         Waiter& get_waiter();
         const Menu& get_menu() const;
         std::map<uint, Table>& get_tables();
-        Kitchen get_kitchen();
+        Kitchen& get_kitchen();
         void add_table(Table table);
         void remove_table(uint table_id);
         Table get_table_by_id(uint table_id);
