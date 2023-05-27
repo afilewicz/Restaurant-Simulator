@@ -1,6 +1,6 @@
 #pragma once
 
-using table_id = uint;
+using table_id = unsigned int;
 
 class Table
 {

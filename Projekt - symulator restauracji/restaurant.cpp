@@ -1,4 +1,4 @@
-#include "restaurant.h"
+#include "restaurant.hpp"
 
 Restaurant::Restaurant(std::string name, Waiter waiter, Menu menu, Kitchen kitchen):
     name(name), waiter(waiter), menu(menu), kitchen(kitchen)
@@ -29,7 +29,17 @@ Kitchen& Restaurant::get_kitchen()
     return kitchen;
 };
 
-void Restaurant::add_table(Table table)
+void Restaurant::add_table(const Table table)
 {
     tables[table.get_id()] = table;
+};
+
+void Restaurant::remove_table(uint table_id)
+{
+    tables.erase(table_id);
+};
+
+Table Restaurant::get_table_by_id(uint table_id)
+{
+    return tables[table_id];
 };

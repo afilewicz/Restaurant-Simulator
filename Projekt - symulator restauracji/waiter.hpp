@@ -1,9 +1,9 @@
 #pragma once
 #include <set>
-#include "restaurant.h"
-#include "table.h"
-#include "client.h"
-#include "receipt.h"
+#include "restaurant.hpp"
+#include "table.hpp"
+#include "client.hpp"
+#include "receipt.hpp"
 
 
 class Waiter
