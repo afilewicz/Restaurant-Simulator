@@ -8,7 +8,7 @@ std::string format_price(int price)
     return std::to_string(price_in_zl) + "." + std::to_string(price_in_gr);
 }
 
-void add_ingredients_to_dish(Dish &dish)
+void add_ingredients_to_menuitem(MenuItem &menuitem)
 {
     while (true)
     {
@@ -23,7 +23,7 @@ void add_ingredients_to_dish(Dish &dish)
             std::cout << "Wprowadź wartość kaloryczną składnika: ";
             std::cin >> ingredient_calories_str;
             Ingredient ingredient(ingredient_name, std::stoi(ingredient_calories_str));
-            dish.add_ingredient(ingredient);
+            menuitem.add_ingredient(ingredient);
         }
         catch (const std::invalid_argument &e)
         {
@@ -34,7 +34,7 @@ void add_ingredients_to_dish(Dish &dish)
     }
 }
 
-void add_dish_to_section(MenuSection &section)
+void add_menuitem_to_section(MenuSection &section)
 {
     while (true)
     {
@@ -50,9 +50,9 @@ void add_dish_to_section(MenuSection &section)
             std::cout << "Wprowadź cenę dania (w groszach): ";
             std::cin >> price_string;
             std::cin.ignore();
-            Dish dish(answer, std::stoi(price_string), {});
-            add_ingredients_to_dish(dish);
-            section.add_dish(dish);
+            MenuItem menuitem(answer, std::stoi(price_string), {});
+            add_ingredients_to_menuitem(menuitem);
+            section.add_menuitem(menuitem);
             std::cin.ignore();
         }
         catch (const std::invalid_argument &e)
@@ -79,7 +79,7 @@ void ask_if_add(std::list<MenuSection> &sections)
         {
             if (section.get_name() == answer)
             {
-                add_dish_to_section(section);
+                add_menuitem_to_section(section);
                 is_valid = true;
                 break;
             }
@@ -100,11 +100,11 @@ void print_menu(Menu &menu)
     {
         std::cout << std::endl;
         std::cout << "  " << menu_section.get_name() << ":" << std::endl;
-        for (Dish dish : menu_section.get_dishes())
+        for (MenuItem menuitem : menu_section.get_menuitems())
         {
             std::cout << std::endl;
-            std::cout << "  - " << dish.get_name() << "\t" << format_price(dish.get_price()) << " PLN, " << dish.get_total_calories() << " kcal" << std::endl;
-            for (Ingredient ingredient : dish.get_ingredients())
+            std::cout << "  - " << menuitem.get_name() << "\t" << format_price(menuitem.get_price()) << " PLN, " << menuitem.get_total_calories() << " kcal" << std::endl;
+            for (Ingredient ingredient : menuitem.get_ingredients())
                 std::cout << "     * " << ingredient.get_name() << std::endl;
         }
     }
@@ -124,32 +124,32 @@ int main()
     Ingredient cream("śmietana", 120);
 
     std::list<Ingredient> greek_salad_ingreds = {salat, tomatoe, feta_cheese, onoin};
-    Dish greek_salad("Sałatka grecka", 1800, greek_salad_ingreds);
+    MenuItem greek_salad("Sałatka grecka", 1800, greek_salad_ingreds);
 
     std::list<Ingredient> kebab_ingreds = {lamb, chicken, salat, tomatoe, onoin};
-    Dish kebab("Kebab mieszany", 1600, kebab_ingreds);
+    MenuItem kebab("Kebab mieszany", 1600, kebab_ingreds);
 
     std::list<Ingredient> tomatoe_soup_ingreds = {tomatoe, rice};
-    Dish tomatoe_soup("Zupa pomidorowa", 1200, tomatoe_soup_ingreds);
+    MenuItem tomatoe_soup("Zupa pomidorowa", 1200, tomatoe_soup_ingreds);
 
     std::list<Ingredient> chocolate_ice_cream_ingreds = {chocolate, cream};
-    Dish chocolate_ice_cream("Lody czekoladowe", 1400, chocolate_ice_cream_ingreds);
+    MenuItem chocolate_ice_cream("Lody czekoladowe", 1400, chocolate_ice_cream_ingreds);
 
     MenuSection appetisers("Przystawki");
-    appetisers.add_dish(greek_salad);
+    appetisers.add_menuitem(greek_salad);
 
     MenuSection soups("Zupy");
-    soups.add_dish(tomatoe_soup);
+    soups.add_menuitem(tomatoe_soup);
 
-    MenuSection main_dishes("Dania główne");
-    main_dishes.add_dish(kebab);
+    MenuSection main_menuitems("Dania główne");
+    main_menuitems.add_menuitem(kebab);
 
     MenuSection desserts("Desery");
-    desserts.add_dish(chocolate_ice_cream);
+    desserts.add_menuitem(chocolate_ice_cream);
 
     menu.add_menu_section(appetisers);
     menu.add_menu_section(soups);
-    menu.add_menu_section(main_dishes);
+    menu.add_menu_section(main_menuitems);
     menu.add_menu_section(desserts);
 
     ask_if_add(menu.get_menu_sections());

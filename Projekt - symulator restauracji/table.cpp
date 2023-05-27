@@ -1,0 +1,23 @@
+#include "table.hpp"
+
+Table::Table() {}
+
+table_id Table::get_id() const
+{
+    return id;
+}
+
+bool Table::get_is_occupied() const
+{
+    return is_occupied;
+}
+
+void Table::switch_is_occupied()
+{
+    is_occupied = !is_occupied;
+}
+
+void Table::add_ready_order(std::unique_ptr<Order> order_ptr)
+{
+    ready_orders.push_back(std::move(order_ptr));
+}

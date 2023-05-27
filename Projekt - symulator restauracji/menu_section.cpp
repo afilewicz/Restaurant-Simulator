@@ -22,19 +22,19 @@ void MenuSection::set_name(std::string new_name)
     name_ = new_name;
 }
 
-const std::list<Dish> &MenuSection::get_dishes() const
+const std::list<MenuItem> &MenuSection::get_menuitems() const
 {
-    return dishes_;
+    return menuitems_;
 }
 
-void MenuSection::add_dish(Dish dish)
+void MenuSection::add_menuitem(MenuItem menuitem)
 {
-    dishes_.push_back(dish);
+    menuitems_.push_back(menuitem);
 }
 
-void MenuSection::remove_dish(Dish dish)
+void MenuSection::remove_menuitem(MenuItem menuitem)
 {
-    dishes_.remove(dish);
+    menuitems_.remove(menuitem);
 }
 
 bool MenuSection::operator==(const MenuSection &other_menu_section) const

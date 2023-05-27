@@ -12,16 +12,16 @@ class Restaurant
         std::string name;
         Waiter waiter;
         Menu menu;
-        std::map<uint, Table> tables;
         Kitchen kitchen;
+        std::map<table_id, Table> tables;
     public:
-        Restaurant(std::string name, Waiter waiter, Menu menu, Kitchen kitchen);
+        Restaurant(std::string, Waiter, Menu, Kitchen, std::map<uint, Table>);
         std::string get_name() const;
         Waiter& get_waiter();
         const Menu& get_menu() const;
-        std::map<uint, Table>& get_tables();
+        std::map<table_id, Table> get_tables();
         Kitchen& get_kitchen();
-        void add_table(const Table table);
-        void remove_table(uint table_id);
-        Table get_table_by_id(uint table_id);
+        void add_table(Table);
+        void remove_table(table_id);
+        Table get_table_by_id(table_id);
 };
