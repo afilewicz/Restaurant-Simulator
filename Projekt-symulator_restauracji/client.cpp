@@ -14,7 +14,7 @@ bool Client::get_is_ready_to_pay() const
     return is_ready_to_pay;
 }
 
-void Client::switch_flag(bool &&flag)
+void Client::switch_flag(bool &flag)
 {
     flag = !flag;
 }

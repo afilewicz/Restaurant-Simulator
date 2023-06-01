@@ -9,9 +9,10 @@ TEST_CASE("Client constructor", "[client]")
 
     SECTION("Client::switch_flag")
     {
-        client.switch_flag(client.get_is_ready_to_order());
+        bool flag = client.get_is_ready_to_order();
+        client.switch_flag(flag);
         REQUIRE(client.get_is_ready_to_order() == true);
-        client.switch_flag(client.get_is_ready_to_order());
+        client.switch_flag(flag);
         REQUIRE(client.get_is_ready_to_order() == false);
     }
 
