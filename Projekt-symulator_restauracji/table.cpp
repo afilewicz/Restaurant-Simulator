@@ -22,7 +22,7 @@ void Table::switch_is_occupied()
     is_occupied = !is_occupied;
 }
 
-void Table::add_ready_order(std::shared_ptr<Order> order_ptr)
+void Table::add_ready_order(Order&& order)
 {
-    ready_orders.push_back(std::move(order_ptr));
+    ready_orders.push_back(std::move(order));
 }

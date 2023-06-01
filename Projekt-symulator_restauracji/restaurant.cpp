@@ -38,7 +38,7 @@ void Restaurant::remove_table(table_id table_id)
     tables.erase(table_id);
 }
 
-Table Restaurant::get_table_by_id(table_id table_id)
+Table& Restaurant::get_table_by_id(table_id table_id)
 {
     return tables[table_id];
 }

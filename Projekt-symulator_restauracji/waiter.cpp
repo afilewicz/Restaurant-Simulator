@@ -10,24 +10,15 @@ Restaurant& Waiter::get_restaurant()
 }
 
 // std::optional (unikać nullptr)
-bool Waiter::is_free_table()
-{
-    for (auto& table : get_restaurant().get_tables())
-    {
-        if (!table.second.get_is_occupied())
-            return true;
-    }
-    return false;
-}
 
-Table Waiter::get_free_table()
+std::optional<Table> Waiter::get_free_table()
 {
     for (auto& table : get_restaurant().get_tables())
     {
         if (!table.second.get_is_occupied())
             return table.second;
     }
-    return Table();
+    return std::nullopt;
 }
 
 std::set<table_id> Waiter::get_serviced_tables()
@@ -61,7 +52,7 @@ void Waiter::look_for_action()
         }
         if (get_restaurant().get_table_by_id(id).get_ready_for_receipt())
         {
-            Order &order = *find_order_by_table_id(id);
+            Order&& order = find_order_by_table_id(id).value();
             give_receipt(get_restaurant().get_table_by_id(id), Receipt(order));
             get_restaurant().get_table_by_id(id).switch_is_occupied();
             serviced_tables.erase(id);
@@ -73,47 +64,47 @@ void Waiter::search_ready_order()
 {
     for (auto& order : get_restaurant().get_kitchen().get_ready_orders())
     {
-        Table table = get_restaurant().get_table_by_id(order->get_table_id());
+        Table& table = get_restaurant().get_table_by_id(order.get_table_id());
         table.add_ready_order(std::move(order));
     }
 }
 
-std::list<std::shared_ptr<Order>> &Waiter::get_accepted_orders()
+std::list<Order> &Waiter::get_accepted_orders()
 {
     return accepted_orders;
 }
 
-void Waiter::add_accepted_order(std::shared_ptr<Order> order)
+void Waiter::add_accepted_order(std::optional<Order> order)
 {
-    accepted_orders.push_back(order);
+    accepted_orders.push_back(order.value());
 }
 
 // zwrócić std::optional
-std::shared_ptr<Order> Waiter::find_order_by_table_id(table_id id)
+std::optional<Order> Waiter::find_order_by_table_id(table_id id)
 {
-    for (auto& order : accepted_orders)
+    for (auto order : accepted_orders)
     {
-        if (order->get_table_id() == id)
+        if (order.get_table_id() == id)
             return order;
     }
-    return nullptr;
+    return std::nullopt;
 }
 
 void Waiter::remove_accepted_order(table_id id)
 {
-    accepted_orders.remove(find_order_by_table_id(id));
+    accepted_orders.remove(find_order_by_table_id(id).value());
 }
 
 void Waiter::take_order(table_id id)
 {
-    std::shared_ptr<Order> order = std::make_shared<Order>(id);
+    Order order = Order(id);
     for (auto& client : get_restaurant().get_table_by_id(id).get_clients())
     {
         for (auto& menuitem : client.get_chosen_dishes())
         {
-            order -> add_dish(std::make_unique<Dish>(menuitem));
+            order.add_dish(Dish(menuitem));
         }
     }
-    Receipt receipt = Receipt(*order);
+    Receipt receipt = Receipt(order);
     get_restaurant().get_kitchen().add_to(get_restaurant().get_kitchen().get_to_do_orders(), order);
 }

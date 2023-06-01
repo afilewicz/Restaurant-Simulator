@@ -23,5 +23,5 @@ class Restaurant
         Kitchen& get_kitchen();
         void add_table(Table);
         void remove_table(table_id);
-        Table get_table_by_id(table_id);
+        Table& get_table_by_id(table_id);
 };
