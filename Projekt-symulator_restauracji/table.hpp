@@ -28,4 +28,5 @@ class Table
         bool get_ready_for_receipt();
         void get_ready_dishes();
         void add_ready_order(std::shared_ptr<Order> order_ptr);
+        // stawianie na stół dań i rachunku
 };

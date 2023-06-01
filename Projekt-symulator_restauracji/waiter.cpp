@@ -9,6 +9,7 @@ Restaurant& Waiter::get_restaurant()
     return restaurant;
 }
 
+// std::optional (unikać nullptr)
 bool Waiter::is_free_table()
 {
     for (auto& table : get_restaurant().get_tables())
@@ -87,6 +88,7 @@ void Waiter::add_accepted_order(std::shared_ptr<Order> order)
     accepted_orders.push_back(order);
 }
 
+// zwrócić std::optional
 std::shared_ptr<Order> Waiter::find_order_by_table_id(table_id id)
 {
     for (auto& order : accepted_orders)

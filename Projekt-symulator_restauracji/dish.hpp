@@ -7,6 +7,7 @@ class MenuItem;
 
 class Dish {
     private:
+        // baza danych czytana z pliku
         std::string name;
         time_ time_to_prepare;
         bool is_ready;
