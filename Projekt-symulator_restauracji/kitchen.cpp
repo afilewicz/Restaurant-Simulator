@@ -1,25 +1,32 @@
 #include "kitchen.hpp"
+#include <chrono>
+#include <thread>
 
 Kitchen::Kitchen(Restaurant& restaurant) : restaurant(restaurant) {}
-
-void Kitchen::add_to_ready_dishes(std::unique_ptr<Dish> dish_ptr)
-{
-    ready_dishes.push_back(std::move(dish_ptr));
-}
 
 std::list<std::unique_ptr<Dish>>& Kitchen::get_ready_dishes()
 {
     return ready_dishes;
 }
 
-std::list<std::unique_ptr<Order>>& Kitchen::get_ready_orders()
+std::list<std::shared_ptr<Order>>& Kitchen::get_ready_orders()
 {
     return ready_orders;
 }
 
-std::list<std::unique_ptr<Order>>& Kitchen::get_to_do_orders()
+std::list<std::shared_ptr<Order>>& Kitchen::get_to_do_orders()
 {
     return to_do_orders;
+}
+
+void Kitchen::prepairing_order(std::shared_ptr<Order> order)
+{
+    for(auto &dish : order -> get_ordered_dishes())
+    {
+        std::this_thread::sleep_for(std::chrono::seconds(dish -> get_time_to_prepare()));
+        dish -> switch_is_ready();
+        ready_dishes.push_back(std::move(dish));
+    }
 }
 
 template<typename L, typename O>

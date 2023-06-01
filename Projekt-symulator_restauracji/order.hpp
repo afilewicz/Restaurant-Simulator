@@ -9,7 +9,7 @@ class Order
     private:
         table_id table;
         std::list<std::unique_ptr<Dish>> ordered_dishes;
-        bool is_ready = false;
+        bool is_ready;
     public:
         Order(table_id);
         table_id get_table_id() const;

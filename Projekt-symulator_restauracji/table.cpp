@@ -1,6 +1,11 @@
 #include "table.hpp"
 
-Table::Table() {}
+Table::Table()
+{
+    is_occupied = false;
+    ready_to_order = false;
+    ready_for_receipt = false;
+}
 
 table_id Table::get_id() const
 {
@@ -17,7 +22,7 @@ void Table::switch_is_occupied()
     is_occupied = !is_occupied;
 }
 
-void Table::add_ready_order(std::unique_ptr<Order> order_ptr)
+void Table::add_ready_order(std::shared_ptr<Order> order_ptr)
 {
     ready_orders.push_back(std::move(order_ptr));
 }

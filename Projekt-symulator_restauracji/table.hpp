@@ -12,11 +12,11 @@ class Table
 {
     private:
         table_id id;
-        bool is_occupied = false;
-        bool ready_to_order = false;
+        bool is_occupied;
+        bool ready_to_order;
         std::vector<Client> clients;
-        bool ready_for_receipt = false;
-        std::list<std::unique_ptr<Order>> ready_orders;
+        bool ready_for_receipt;
+        std::list<std::shared_ptr<Order>> ready_orders;
     public:
         Table();
         table_id get_id() const;
@@ -27,5 +27,5 @@ class Table
         std::vector<Client> get_clients();
         bool get_ready_for_receipt();
         void get_ready_dishes();
-        void add_ready_order(std::unique_ptr<Order> order_ptr);
+        void add_ready_order(std::shared_ptr<Order> order_ptr);
 };
