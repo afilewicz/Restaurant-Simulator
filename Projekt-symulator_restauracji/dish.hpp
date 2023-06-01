@@ -9,7 +9,7 @@ class Dish {
     private:
         std::string name;
         time_ time_to_prepare;
-        bool is_ready = false;
+        bool is_ready;
     public:
         Dish(MenuItem&);
         std::string get_name() const;
