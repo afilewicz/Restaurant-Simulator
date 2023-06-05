@@ -108,3 +108,11 @@ void Waiter::take_order(table_id id)
     Receipt receipt = Receipt(order);
     get_restaurant().get_kitchen().add_to(get_restaurant().get_kitchen().get_to_do_orders(), order);
 }
+
+void Waiter::give_receipt(Table table, Receipt receipt)
+{
+    table.set_receipt(std::move(receipt));
+    table.switch_ready_for_receipt();
+    table.switch_is_occupied();
+    serviced_tables.erase(table.get_id());
+}

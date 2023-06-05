@@ -8,6 +8,8 @@ using table_id = unsigned int;
 
 class Order;
 
+class Receipt;
+
 class Table
 {
     private:
@@ -17,6 +19,7 @@ class Table
         std::vector<Client> clients;
         bool ready_for_receipt;
         std::list<Order> ready_orders;
+        std::optional<Receipt> receipt = std::nullopt;
     public:
         Table();
         table_id get_id() const;
@@ -28,5 +31,7 @@ class Table
         bool get_ready_for_receipt();
         void get_ready_dishes();
         void add_ready_order(Order&&);
+        void switch_ready_for_receipt();
+        void set_receipt(Receipt&&);
         // stawianie na stół dań i rachunku
 };
