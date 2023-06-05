@@ -1,13 +1,16 @@
 #pragma once
 #include "order.hpp"
+#include <ostream>
 
-class Receipt {
-    private:
-        Order order;
-        int total_price;
-    public:
-        Receipt(Order);
-        Order get_order();
-        int get_total_price();
-        void show_receipt();
+class Receipt
+{
+private:
+    Order order_;
+    int total_price_;
+
+public:
+    Receipt(Order);
+    Order &get_order();
+    int get_total_price();
+    std::ostream &show_receipt(std::ostream &os);
 };
