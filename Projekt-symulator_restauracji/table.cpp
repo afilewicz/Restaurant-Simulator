@@ -21,6 +21,21 @@ void Table::switch_flag(bool &flag)
     flag = !flag;
 }
 
+void Table::switch_is_occupied()
+{
+    is_occupied = !is_occupied;
+}
+
+void Table::switch_ready_to_order()
+{
+    ready_to_order = !ready_to_order;
+}
+
+void Table::switch_ready_for_receipt()
+{
+    ready_for_receipt = !ready_for_receipt;
+}
+
 bool Table::get_ready_to_order() const
 {
     return ready_to_order;
@@ -36,7 +51,7 @@ bool Table::get_ready_for_receipt() const
     return ready_for_receipt;
 }
 
-void Table::add_ready_order(Order &order)
-{
-    ready_orders.push_back(std::move(order));
-}
+// void Table::add_ready_order(Order &order)
+// {
+//     ready_orders.push_back(std::move(order));
+// }

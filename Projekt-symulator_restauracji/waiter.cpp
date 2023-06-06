@@ -2,9 +2,9 @@
 #include "waiter.hpp"
 #include "restaurant.hpp"
 
-Waiter::Waiter(Restaurant& restaurant) : restaurant(restaurant) {}
+Waiter::Waiter(Restaurant &restaurant) : restaurant(restaurant) {}
 
-Restaurant& Waiter::get_restaurant()
+Restaurant &Waiter::get_restaurant()
 {
     return restaurant;
 }
@@ -13,7 +13,7 @@ Restaurant& Waiter::get_restaurant()
 
 std::optional<Table> Waiter::get_free_table()
 {
-    for (auto& table : get_restaurant().get_tables())
+    for (auto &table : get_restaurant().get_tables())
     {
         if (!table.second.get_is_occupied())
             return table.second;
@@ -52,7 +52,7 @@ void Waiter::look_for_action()
         }
         if (get_restaurant().get_table_by_id(id).get_ready_for_receipt())
         {
-            Order&& order = find_order_by_table_id(id).value();
+            Order &&order = find_order_by_table_id(id).value();
             give_receipt(get_restaurant().get_table_by_id(id), Receipt(order));
             get_restaurant().get_table_by_id(id).switch_is_occupied();
             serviced_tables.erase(id);
@@ -60,14 +60,14 @@ void Waiter::look_for_action()
     }
 }
 
-void Waiter::search_ready_order()
-{
-    for (auto& order : get_restaurant().get_kitchen().get_ready_orders())
-    {
-        Table& table = get_restaurant().get_table_by_id(order.get_table_id());
-        table.add_ready_order(std::move(order));
-    }
-}
+// void Waiter::search_ready_order()
+// {
+//     for (auto &order : get_restaurant().get_kitchen().get_ready_orders())
+//     {
+//         Table &table = get_restaurant().get_table_by_id(order.get_table_id());
+//         // table.add_ready_order(std::move(order));
+//     }
+// }
 
 std::list<Order> &Waiter::get_accepted_orders()
 {
@@ -98,20 +98,20 @@ void Waiter::remove_accepted_order(table_id id)
 void Waiter::take_order(table_id id)
 {
     Order order = Order(id);
-    for (auto& client : get_restaurant().get_table_by_id(id).get_clients())
+    for (auto &client : get_restaurant().get_table_by_id(id).get_clients())
     {
-        for (auto& menuitem : client.get_chosen_dishes())
+        for (auto &menuitem : client.get_chosen_dishes())
         {
-            order.add_dish(Dish(menuitem));
+            order.add_dish(menuitem);
         }
     }
     Receipt receipt = Receipt(order);
-    get_restaurant().get_kitchen().add_to(get_restaurant().get_kitchen().get_to_do_orders(), order);
+    add_to(get_restaurant().get_kitchen().get_to_do_orders(), order);
 }
 
 void Waiter::give_receipt(Table table, Receipt receipt)
 {
-    table.set_receipt(std::move(receipt));
+    // table.set_receipt(std::move(receipt));
     table.switch_ready_for_receipt();
     table.switch_is_occupied();
     serviced_tables.erase(table.get_id());

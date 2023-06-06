@@ -20,4 +20,5 @@ std::ostream &Receipt::show_receipt(std::ostream &os)
     for (const auto &dish : order_.get_ordered_dishes())
         os << "/t" << dish.get_name() << " - " << dish.get_price() << std::endl;
     os << "Total: " << get_total_price() << std::endl;
+    return os;
 }

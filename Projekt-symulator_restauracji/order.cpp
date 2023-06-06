@@ -2,7 +2,7 @@
 
 Order::Order(uint32_t table_id) : table_id_(table_id) {}
 
-table_id Order::get_table_id() const
+uint32_t Order::get_table_id() const
 {
     return table_id_;
 }
@@ -25,4 +25,9 @@ void Order::switch_is_ready()
 void Order::add_dish(MenuItem &dish)
 {
     ordered_dishes.push_back(dish);
+}
+
+bool Order::operator==(const Order &order) const
+{
+    return table_id_ == order.table_id_;
 }

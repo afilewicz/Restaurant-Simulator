@@ -2,8 +2,6 @@
 #include "order.hpp"
 #include <ostream>
 
-class Order;
-
 class Receipt
 {
 private:

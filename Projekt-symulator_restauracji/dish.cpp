@@ -1,5 +1,4 @@
 #include "dish.hpp"
-#include "menuitem.hpp"
 
 Dish::Dish(MenuItem &menuitem) : name(menuitem.get_name())
 {

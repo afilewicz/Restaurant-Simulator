@@ -1,10 +1,6 @@
 #pragma once
 #include <list>
-#include <memory>
 #include "dish.hpp"
-#include "table.hpp"
-#include <string>
-#include <utility>
 
 class Order
 {
@@ -20,4 +16,5 @@ public:
     bool get_is_ready() const;
     void switch_is_ready();
     void add_dish(MenuItem &dish);
+    bool operator==(const Order &order) const;
 };
