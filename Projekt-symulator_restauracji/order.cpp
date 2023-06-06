@@ -1,10 +1,10 @@
 #include "order.hpp"
 
-Order::Order(table_id table_id) : tbl_id(table_id) {}
+Order::Order(uint32_t table_id) : table_id_(table_id) {}
 
 table_id Order::get_table_id() const
 {
-    return tbl_id;
+    return table_id_;
 }
 
 std::list<MenuItem> &Order::get_ordered_dishes()

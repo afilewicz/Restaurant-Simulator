@@ -2,9 +2,14 @@
 #include <vector>
 #include <list>
 #include <memory>
+#include <optional>
 #include "client.hpp"
+#include "order.hpp"
+#include "receipt.hpp"
 
 using table_id = unsigned int;
+
+class Order;
 
 class Table
 {
@@ -19,7 +24,7 @@ public:
     std::vector<Client> &get_clients();
     bool get_ready_for_receipt() const;
     void get_ready_dishes() const;
-    void add_ready_order(Order &&);
+    void place_order_on_table(Order &);
     // void switch_ready_for_receipt();
     void set_receipt(Receipt &&);
 
