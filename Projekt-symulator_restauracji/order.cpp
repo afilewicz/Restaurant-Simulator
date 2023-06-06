@@ -12,7 +12,7 @@ std::list<MenuItem> &Order::get_ordered_dishes()
     return ordered_dishes;
 }
 
-bool Order::get_is_ready() const
+bool &Order::get_is_ready()
 {
     return is_ready;
 }

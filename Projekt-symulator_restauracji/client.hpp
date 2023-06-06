@@ -11,8 +11,8 @@ private:
 
 public:
     Client();
-    bool get_is_ready_to_order() const;
-    bool get_is_ready_to_pay() const;
+    bool &get_is_ready_to_order();
+    bool &get_is_ready_to_pay();
     void switch_flag(bool &flag);
     std::vector<MenuItem> get_chosen_dishes() const;
     void eating();

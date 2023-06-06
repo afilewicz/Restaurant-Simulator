@@ -4,12 +4,12 @@ Client::Client()
 {
 }
 
-bool Client::get_is_ready_to_order() const
+bool &Client::get_is_ready_to_order()
 {
     return is_ready_to_order;
 }
 
-bool Client::get_is_ready_to_pay() const
+bool &Client::get_is_ready_to_pay()
 {
     return is_ready_to_pay;
 }
