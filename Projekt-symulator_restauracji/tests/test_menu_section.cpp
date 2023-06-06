@@ -20,18 +20,18 @@ TEST_CASE("MenuSection constructor")
     {
         CHECK_THROWS_AS(menu_section.set_name(""), std::invalid_argument);
     }
-    SECTION("add_dish() adds dish to list")
+    SECTION("add_menuitem() adds dish to list")
     {
-        Dish dish("Soup", 10, {});
-        menu_section.add_dish(dish);
-        CHECK(menu_section.get_dishes().size() == 1);
+        MenuItem dish("Soup", 10, {});
+        menu_section.add_menuitem(dish);
+        CHECK(menu_section.get_menuitems().size() == 1);
     }
-    SECTION("remove_dish() removes dish from list")
+    SECTION("remove_menuitem() removes dish from list")
     {
-        Dish dish("Soup", 10, {});
-        menu_section.add_dish(dish);
-        CHECK(menu_section.get_dishes().size() == 1);
-        menu_section.remove_dish(dish);
-        CHECK(menu_section.get_dishes().size() == 0);
+        MenuItem dish("Soup", 10, {});
+        menu_section.add_menuitem(dish);
+        CHECK(menu_section.get_menuitems().size() == 1);
+        menu_section.remove_menuitem(dish);
+        CHECK(menu_section.get_menuitems().size() == 0);
     }
 }
