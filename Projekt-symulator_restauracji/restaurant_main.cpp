@@ -39,10 +39,17 @@ int main()
     std::cout << "Wprowadź liczbę osób, które przyjdą do restauracji: ";
     std::cin >> num_of_clients;
 
-    std::optional<Table> free_table = waiter.get_free_table(num_of_clients);
-    if (free_table)
-        std::cout << free_table.value().get_id();
-    else
-        std::cout << "Niestety nie ma wolnego stolika" << std::endl;
+    while (true)
+    {
+        std::optional<Table> free_table = waiter.get_free_table(num_of_clients);
+        if (free_table)
+            std::cout << free_table.value().get_id();
+
+        else
+        {
+            std::cout << "Niestety nie ma wolnego stolika" << std::endl;
+            continue;
+        }
+    }
     return 0;
 };
