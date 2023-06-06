@@ -1,10 +1,12 @@
 #include "table.hpp"
 
-Table::Table()
+Table::Table(uint32_t num_of_seats) : number_of_seats_(num_of_seats)
 {
     static uint32_t id_counter = 0;
     id = id_counter++;
 }
+
+Table::Table(){};
 
 table_id Table::get_id() const
 {
@@ -49,6 +51,11 @@ std::vector<Client> &Table::get_clients()
 bool Table::get_ready_for_receipt() const
 {
     return ready_for_receipt;
+}
+
+uint32_t Table::get_num_of_seats() const
+{
+    return number_of_seats_;
 }
 
 // void Table::add_ready_order(Order &order)
