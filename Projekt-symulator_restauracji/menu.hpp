@@ -4,15 +4,17 @@
 
 class Menu
 {
-private:
-    std::string name_;
-    std::list<MenuSection> menu_sections_;
-
 public:
-    Menu(std::string name);
-    std::string get_name();
-    void set_name(std::string new_name);
+    Menu();
     std::list<MenuSection> &get_menu_sections();
     void add_menu_section(MenuSection menu_section);
     void remove_menu_section(MenuSection menu_section);
+    void add_menu_item_to_menu_section(MenuItem dish, std::string menu_section_name);
+    MenuSection *get_menu_section_by_name(std::string menu_section_name);
+
+private:
+    bool is_menu_section_in_menu(std::string menu_section_name);
+
+    // std::string name_;
+    std::list<MenuSection> menu_sections_;
 };

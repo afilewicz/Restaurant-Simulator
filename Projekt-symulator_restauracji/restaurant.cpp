@@ -1,10 +1,10 @@
 #include "restaurant.hpp"
 
-Restaurant::Restaurant(std::string name, Menu menu, std::map<uint32_t, Table> tables) : name(name), menu(menu), tables(tables) {}
+Restaurant::Restaurant(std::string name) : name_(name) {}
 
 std::string Restaurant::get_name() const
 {
-    return name;
+    return name_;
 }
 
 Waiter &Restaurant::get_waiter()
@@ -12,9 +12,9 @@ Waiter &Restaurant::get_waiter()
     return waiter.value();
 }
 
-const Menu &Restaurant::get_menu() const
+Menu &Restaurant::get_menu()
 {
-    return menu;
+    return menu.value();
 }
 
 std::map<uint, Table> Restaurant::get_tables()
@@ -50,4 +50,14 @@ void Restaurant::set_kitchen(Kitchen &new_kitchen)
 void Restaurant::set_waiter(Waiter &new_waiter)
 {
     waiter.emplace(new_waiter);
+}
+
+void Restaurant::set_menu(Menu &new_menu)
+{
+    menu.emplace(new_menu);
+}
+
+void Restaurant::set_tables(std::map<table_id, Table> &new_tables)
+{
+    tables = new_tables;
 }

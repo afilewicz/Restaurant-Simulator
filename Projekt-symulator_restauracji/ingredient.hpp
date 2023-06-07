@@ -4,10 +4,11 @@
 class Ingredient
 {
 private:
-    std::string name_;
-    int calories_;
+    std::string name_ = "";
+    int calories_ = 0;
 
 public:
+    Ingredient() = default;
     Ingredient(std::string name, float calories);
     std::string get_name() const;
     void set_name(const std::string new_name);

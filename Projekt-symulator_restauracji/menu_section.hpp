@@ -1,20 +1,26 @@
 #pragma once
 #include <string>
 #include <list>
+#include <map>
+#include <vector>
 #include "menuitem.hpp"
+
+using Dish_name = std::string;
 
 class MenuSection
 {
 private:
     std::string name_;
-    std::list<MenuItem> menuitems_;
+    std::map<std::string, MenuItem> menu_items_;
 
 public:
     MenuSection(std::string name);
-    std::string get_name();
+    std::string get_name() const;
     void set_name(std::string new_name);
-    const std::list<MenuItem> &get_menuitems() const;
-    void add_menuitem(MenuItem menuitem);
-    void remove_menuitem(MenuItem menuitem);
+    const std::map<Dish_name, MenuItem> &get_menu_items() const;
+    MenuItem get_menu_item_by_name(Dish_name dish_name);
+    void add_menu_item(MenuItem dish);
+    void remove_menu_item(Dish_name dish_name);
     bool operator==(const MenuSection &other_menu_section) const;
+    std::vector<std::pair<std::string, MenuItem>> sorted() const;
 };

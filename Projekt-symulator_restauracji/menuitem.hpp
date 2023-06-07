@@ -5,12 +5,6 @@
 
 class MenuItem
 {
-private:
-    std::string name_;
-    int price_;
-    std::list<Ingredient> ingredients_;
-    bool is_ingredient_in_list(Ingredient &ingredient_to_remove) const;
-
 public:
     MenuItem(std::string name, int price, std::list<Ingredient> ingredients);
     std::string get_name() const;
@@ -22,4 +16,10 @@ public:
     void add_ingredient(Ingredient &new_ingredient);
     void remove_ingredient(Ingredient &ingredient_to_remove);
     bool operator==(const MenuItem &other_menuitem) const;
+
+private:
+    std::string name_;
+    int price_;
+    std::list<Ingredient> ingredients_;
+    bool is_ingredient_in_list(Ingredient &ingredient_to_remove) const;
 };

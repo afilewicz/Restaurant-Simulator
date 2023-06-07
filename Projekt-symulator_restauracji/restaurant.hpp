@@ -11,10 +11,10 @@ class Restaurant
 {
 
 public:
-    Restaurant(std::string name, Menu, std::map<uint32_t, Table>);
+    Restaurant(std::string name);
     std::string get_name() const;
     Waiter &get_waiter();
-    const Menu &get_menu() const;
+    Menu &get_menu();
     std::map<table_id, Table> get_tables();
     Kitchen &get_kitchen();
     void add_table(Table);
@@ -22,11 +22,13 @@ public:
     Table &get_table_by_id(table_id);
     void set_kitchen(Kitchen &kitchen);
     void set_waiter(Waiter &waiter);
+    void set_menu(Menu &menu);
+    void set_tables(std::map<table_id, Table> &tables);
 
 private:
-    std::string name;
+    std::string name_;
     std::optional<Waiter> waiter;
-    Menu menu;
+    std::optional<Menu> menu;
     std::optional<Kitchen> kitchen;
-    std::map<table_id, Table> tables;
+    std::map<table_id, Table> tables = {};
 };
