@@ -28,12 +28,13 @@ public:
     void place_order_on_table(Order &);
     void switch_ready_for_receipt();
     uint32_t get_num_of_seats() const;
+    uint32_t get_free_seats() const;
 
 private:
     table_id id;
     bool is_occupied = false;
     bool ready_to_order = false;
-    std::vector<Client> clients;
+    std::vector<Client> clients = {};
     bool ready_for_receipt = false;
     std::list<Order> ready_orders;
     uint32_t number_of_seats_ = 0;
