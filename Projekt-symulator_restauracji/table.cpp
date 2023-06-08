@@ -63,6 +63,11 @@ uint32_t Table::get_free_seats() const
     return number_of_seats_ - clients.size();
 }
 
+void Table::add_client(Client &client)
+{
+    clients.push_back(client);
+}
+
 // void Table::add_ready_order(Order &order)
 // {
 //     ready_orders.push_back(std::move(order));

@@ -47,3 +47,15 @@ class MenuSectionDoesNotExistError : public std::invalid_argument
 public:
     MenuSectionDoesNotExistError(std::string menu_section_name) : std::invalid_argument("Menu section with following name does not exist: " + menu_section_name) {}
 };
+
+class NoFreeTableError : public std::invalid_argument
+{
+public:
+    NoFreeTableError(size_t num_of_people) : std::invalid_argument("No free table for group with following number of people: " + num_of_people) {}
+};
+
+class EmptyQueueError : public std::invalid_argument
+{
+public:
+    EmptyQueueError() : std::invalid_argument("Queue is empty") {}
+};

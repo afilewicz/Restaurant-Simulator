@@ -2,10 +2,11 @@
 #include <set>
 #include <optional>
 #include "table.hpp"
-#include "client.hpp"
+// #include "client.hpp"
 #include "receipt.hpp"
 #include "kitchen.hpp"
 #include "functions.cpp"
+#include "client_group.hpp"
 
 class Restaurant;
 
@@ -24,7 +25,7 @@ public:
     std::set<table_id> get_serviced_tables();
     bool get_is_busy();
     void switch_busy();
-    void place_at_table(Table, Client);
+    void place_at_table(Table, ClientGroup);
     void look_for_action();
     void give_receipt(Table, Receipt);
     void search_ready_order();

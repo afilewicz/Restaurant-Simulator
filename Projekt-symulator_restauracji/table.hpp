@@ -9,8 +9,6 @@
 
 using table_id = uint32_t;
 
-class Order;
-
 class Table
 {
 public:
@@ -29,6 +27,7 @@ public:
     void switch_ready_for_receipt();
     uint32_t get_num_of_seats() const;
     uint32_t get_free_seats() const;
+    void add_client(Client &client);
 
 private:
     table_id id;

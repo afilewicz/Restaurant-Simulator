@@ -36,10 +36,14 @@ void Waiter::switch_busy()
     is_busy = !is_busy;
 }
 
-void Waiter::place_at_table(Table table, Client client)
+void Waiter::place_at_table(Table table, ClientGroup group)
 {
     table.switch_is_occupied();
     serviced_tables.insert(table.get_id());
+    for (auto &client : group.get_clients())
+    {
+        table.add_client(client);
+    }
 }
 
 void Waiter::look_for_action()
