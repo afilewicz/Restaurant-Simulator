@@ -9,7 +9,7 @@ public:
     RestaurantSimulator(Restaurant &&restaurant);
     void set_restaurant_attributes(std::string menu_path, std::string tables_path);
     void add_clients_to_queue(uint8_t number_of_clients);
-    void let_in_one_group_and_place();              // exception if no groups in queue, do zrobienia
+    void let_in_one_group_and_place();
     void take_order_from_table(uint32_t table_id);  // do zrobienia
     void serve_ready_dish();                        // exception if no ready dishes, do zrobienia
     void bring_receipt_to_table(uint32_t table_id); // do zrobienia
@@ -19,7 +19,7 @@ public:
 
 private:
     Menu load_menu(std::string path_to_file);
-    void load_tables(std::string path_to_file); // do zrobienia
+    void load_tables(std::string path_to_file);
 
     Restaurant restaurant_;
     std::deque<ClientGroup> queue_;
