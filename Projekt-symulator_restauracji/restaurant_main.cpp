@@ -28,5 +28,8 @@ int main()
     // simulator.show_tables_info(std::cout);
     simulator.show_queue_info(std::cout);
     simulator.let_in_one_group_and_place();
+    simulator.let_in_one_group_and_place();
+    simulator.let_in_one_group_and_place();
+    simulator.let_in_one_group_and_place();
     simulator.show_queue_info(std::cout);
 };

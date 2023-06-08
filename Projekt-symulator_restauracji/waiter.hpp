@@ -25,7 +25,7 @@ public:
     std::set<table_id> get_serviced_tables();
     bool get_is_busy();
     void switch_busy();
-    void place_at_table(Table, ClientGroup);
+    void place_at_table(Table &, ClientGroup);
     void look_for_action();
     void give_receipt(Table, Receipt);
     void search_ready_order();
