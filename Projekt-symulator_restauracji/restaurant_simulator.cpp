@@ -19,7 +19,7 @@ void RestaurantSimulator::set_restaurant_attributes(std::string menu_path, std::
 Menu RestaurantSimulator::load_menu(std::string path_to_file)
 {
     Menu menu{};
-    read_from_csv<MenuItem, Menu, Ingredient>(path_to_file, menu);
+    //read_from_csv<MenuItem, Menu, Ingredient>(path_to_file, menu);
     return menu;
 }
 
@@ -28,7 +28,7 @@ std::map<uint32_t, Table> RestaurantSimulator::load_tables(std::string path_to_f
     return std::map<uint32_t, Table>{
         {0, Table{4}},
         {1, Table{3}},
-        {2, Table(2)},
+        {2, Table{2}},
         {3, Table{6}},
     };
 }
