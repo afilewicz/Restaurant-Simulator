@@ -15,7 +15,7 @@ public:
     std::string get_name() const;
     Waiter &get_waiter();
     Menu &get_menu();
-    std::map<table_id, Table> get_tables();
+    std::map<table_id, Table> &get_tables();
     Kitchen &get_kitchen();
     void add_table(Table);
     void remove_table(table_id);

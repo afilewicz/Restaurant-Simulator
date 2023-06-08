@@ -17,7 +17,7 @@ Menu &Restaurant::get_menu()
     return menu.value();
 }
 
-std::map<uint, Table> Restaurant::get_tables()
+std::map<uint, Table> &Restaurant::get_tables()
 {
     return tables;
 }

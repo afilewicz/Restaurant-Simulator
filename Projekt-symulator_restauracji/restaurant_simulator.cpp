@@ -8,13 +8,12 @@ RestaurantSimulator::RestaurantSimulator(Restaurant &&restaurant) : restaurant_(
 void RestaurantSimulator::set_restaurant_attributes(std::string menu_path, std::string tables_path)
 {
     Menu menu = load_menu(menu_path);
-    std::map<uint32_t, Table> tables = load_tables(tables_path);
+    load_tables(tables_path);
     Waiter waiter{restaurant_};
     Kitchen kitchen{restaurant_};
     restaurant_.set_waiter(waiter);
     restaurant_.set_kitchen(kitchen);
     restaurant_.set_menu(menu);
-    restaurant_.set_tables(tables);
 }
 
 Menu RestaurantSimulator::load_menu(std::string path_to_file)
@@ -24,14 +23,9 @@ Menu RestaurantSimulator::load_menu(std::string path_to_file)
     return menu;
 }
 
-std::map<uint32_t, Table> RestaurantSimulator::load_tables(std::string path_to_file)
+void RestaurantSimulator::load_tables(std::string path_to_file)
 {
-    return std::map<uint32_t, Table>{
-        {0, Table{4}},
-        {1, Table{3}},
-        {2, Table(2)},
-        {3, Table{6}},
-    };
+    read_tables_from_csv(path_to_file, restaurant_.get_tables());
 }
 
 void RestaurantSimulator::add_clients_to_queue(uint8_t num_of_clients)
