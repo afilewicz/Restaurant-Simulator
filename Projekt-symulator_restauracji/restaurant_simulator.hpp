@@ -1,5 +1,6 @@
 #include "restaurant.hpp"
 #include "read_menu.hpp"
+#include "read_tables.hpp"
 #include <deque>
 
 class RestaurantSimulator

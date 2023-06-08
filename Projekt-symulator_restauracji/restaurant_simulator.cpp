@@ -25,7 +25,7 @@ Menu RestaurantSimulator::load_menu(std::string path_to_file)
 
 void RestaurantSimulator::load_tables(std::string path_to_file)
 {
-    read_tables_from_csv(path_to_file, restaurant_.get_tables());
+    read_tables_from_csv<Table>(path_to_file, restaurant_.get_tables());
 }
 
 void RestaurantSimulator::add_clients_to_queue(uint8_t num_of_clients)
