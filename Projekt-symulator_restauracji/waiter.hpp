@@ -7,6 +7,7 @@
 #include "kitchen.hpp"
 #include "functions.cpp"
 #include "client_group.hpp"
+#include "exceptions.hpp"
 
 class Restaurant;
 
@@ -21,7 +22,8 @@ private:
 public:
     Waiter(Restaurant &);
     Restaurant &get_restaurant();
-    std::optional<Table> get_free_table(uint32_t number_of_seats);
+    // std::optional<Table> get_free_table(uint32_t number_of_seats);
+    Table &get_free_table(uint32_t number_of_seats);
     std::set<table_id> get_serviced_tables();
     bool get_is_busy();
     void switch_busy();

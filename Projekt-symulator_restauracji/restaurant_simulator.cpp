@@ -1,7 +1,6 @@
 #include "restaurant_simulator.hpp"
 #include "price_formatter.hpp"
 #include <random>
-#include "exceptions.hpp"
 
 RestaurantSimulator::RestaurantSimulator(Restaurant &&restaurant) : restaurant_(restaurant) {}
 
@@ -42,19 +41,36 @@ void RestaurantSimulator::add_clients_to_queue(uint8_t num_of_clients)
     }
 }
 
+// void RestaurantSimulator::let_in_one_group_and_place()
+// {
+//     if (queue_.empty())
+//         throw EmptyQueueError();
+//     ClientGroup first_group = queue_.front();
+//     std::optional<Table> table = restaurant_.get_waiter().get_free_table(first_group.get_number_of_clients());
+//     if (table)
+//     {
+//         restaurant_.get_waiter().place_at_table(*table, first_group);
+//         queue_.pop_front();
+//     }
+//     else
+//         throw NoFreeTableError(first_group.get_clients().size());
+// }
+
 void RestaurantSimulator::let_in_one_group_and_place()
 {
     if (queue_.empty())
         throw EmptyQueueError();
     ClientGroup first_group = queue_.front();
-    std::optional<Table> table = restaurant_.get_waiter().get_free_table(first_group.get_number_of_clients());
-    if (table)
+    try
     {
-        restaurant_.get_waiter().place_at_table(table.value(), first_group);
+        Table &table = restaurant_.get_waiter().get_free_table(first_group.get_number_of_clients());
+        restaurant_.get_waiter().place_at_table(table, first_group);
         queue_.pop_front();
     }
-    else
+    catch (NoFreeTableError &e)
+    {
         throw NoFreeTableError(first_group.get_clients().size());
+    }
 }
 
 std::ostream &RestaurantSimulator::show_tables_info(std::ostream &os)

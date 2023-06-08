@@ -11,14 +11,24 @@ Restaurant &Waiter::get_restaurant()
 
 // std::optional (unikać nullptr)
 
-std::optional<Table> Waiter::get_free_table(uint32_t num_of_clients)
+// std::optional<Table> Waiter::get_free_table(uint32_t num_of_clients)
+// {
+//     for (auto &[id, table] : get_restaurant().get_tables())
+//     {
+//         if (!table.get_is_occupied() && table.get_num_of_seats() >= num_of_clients)
+//             return table;
+//     }
+//     return std::nullopt;
+// }
+
+Table &Waiter::get_free_table(uint32_t num_of_clients)
 {
     for (auto &[id, table] : get_restaurant().get_tables())
     {
         if (!table.get_is_occupied() && table.get_num_of_seats() >= num_of_clients)
             return table;
     }
-    return std::nullopt;
+    throw NoFreeTableError(num_of_clients);
 }
 
 std::set<table_id> Waiter::get_serviced_tables()
