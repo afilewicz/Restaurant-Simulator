@@ -21,7 +21,7 @@ uint16_t ask_for_number_of_clients()
 int main()
 {
     RestaurantSimulator simulator(Restaurant{"restaurant"});
-    simulator.set_restaurant_attributes("menu.csv", "menu.csv");
+    simulator.set_restaurant_attributes("menu.csv", "tables.csv");
     uint8_t num_of_clients = ask_for_number_of_clients();
     simulator.add_clients_to_queue(num_of_clients);
     // simulator.show_menu(std::cout);
