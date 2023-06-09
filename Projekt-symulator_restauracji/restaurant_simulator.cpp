@@ -41,37 +41,37 @@ void RestaurantSimulator::add_clients_to_queue(uint8_t num_of_clients)
     }
 }
 
-// void RestaurantSimulator::let_in_one_group_and_place()
-// {
-//     if (queue_.empty())
-//         throw EmptyQueueError();
-//     ClientGroup first_group = queue_.front();
-//     std::optional<Table> table = restaurant_.get_waiter().get_free_table(first_group.get_number_of_clients());
-//     if (table)
-//     {
-//         restaurant_.get_waiter().place_at_table(*table, first_group);
-//         queue_.pop_front();
-//     }
-//     else
-//         throw NoFreeTableError(first_group.get_clients().size());
-// }
-
 void RestaurantSimulator::let_in_one_group_and_place()
 {
     if (queue_.empty())
         throw EmptyQueueError();
     ClientGroup first_group = queue_.front();
-    try
+    std::optional<Table> table = restaurant_.get_waiter().get_free_table(first_group.get_number_of_clients());
+    if (table)
     {
-        Table &table = restaurant_.get_waiter().get_free_table(first_group.get_number_of_clients());
-        restaurant_.get_waiter().place_at_table(table, first_group);
+        restaurant_.get_waiter().place_at_table(*table, first_group);
         queue_.pop_front();
     }
-    catch (NoFreeTableError &e)
-    {
+    else
         throw NoFreeTableError(first_group.get_clients().size());
-    }
 }
+
+// void RestaurantSimulator::let_in_one_group_and_place()
+// {
+//     if (queue_.empty())
+//         throw EmptyQueueError();
+//     ClientGroup first_group = queue_.front();
+//     try
+//     {
+//         Table &table = restaurant_.get_waiter().get_free_table(first_group.get_number_of_clients());
+//         restaurant_.get_waiter().place_at_table(table, first_group);
+//         queue_.pop_front();
+//     }
+//     catch (NoFreeTableError &e)
+//     {
+//         throw NoFreeTableError(first_group.get_clients().size());
+//     }
+// }
 
 std::ostream &RestaurantSimulator::show_tables_info(std::ostream &os)
 {
@@ -81,7 +81,7 @@ std::ostream &RestaurantSimulator::show_tables_info(std::ostream &os)
         auto free_seats = table.get_free_seats();
         os << "\t"
            << "Stolik nr: " << id << ", wolnych miejsc: "
-           << free_seats << "/" << table.get_num_of_seats() << std::endl;
+           << free_seats << "/" << table.get_num_of_seats() << '\n';
     }
     return os;
 }
@@ -93,7 +93,7 @@ std::ostream &RestaurantSimulator::show_queue_info(std::ostream &os)
     for (const auto &group : queue_)
     {
         os << " " << counter << ". liczba osób: "
-           << group.get_number_of_clients() << std::endl;
+           << group.get_number_of_clients() << '\n';
         counter++;
     }
     return os;
@@ -104,15 +104,15 @@ std::ostream &RestaurantSimulator::show_menu(std::ostream &os)
     os << "Menu: " << std::endl;
     for (MenuSection menu_section : restaurant_.get_menu().get_menu_sections())
     {
-        os << std::endl;
+        os << '\n';
         os << "  " << menu_section.get_name() << ":" << std::endl;
         for (const auto &[name, item] : menu_section.get_menu_items())
         {
             os << std::endl;
             os << "  - " << item.get_name() << "\t" << format_price(item.get_price())
-               << " " << item.get_total_calories() << " kcal" << std::endl;
+               << " " << item.get_total_calories() << " kcal" << '\n';
             for (Ingredient ingredient : item.get_ingredients())
-                os << "     * " << ingredient.get_name() << std::endl;
+                os << "     * " << ingredient.get_name() << '\n';
         }
     }
     return os;
