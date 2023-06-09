@@ -18,6 +18,7 @@ private:
     Restaurant &restaurant;
     bool is_busy = false;
     std::list<Order> accepted_orders;
+    std::list<Receipt> receipts;
 
 public:
     Waiter(Restaurant &);
@@ -27,15 +28,17 @@ public:
     std::set<table_id> get_serviced_tables();
     bool get_is_busy();
     void switch_busy();
-    void place_at_table(Table &, ClientGroup);
+    void place_at_table(Table&, ClientGroup);
     void look_for_action();
-    void give_receipt(Table, Receipt);
+    void give_receipt(Table&);
     void search_ready_order();
     std::list<Order> &get_accepted_orders();
     void add_accepted_order(std::optional<Order>);
     std::optional<Order> find_order_by_table_id(table_id);
     void remove_accepted_order(table_id);
     void take_order(table_id);
+    void add_receipt(Receipt Receipt);
+    std::optional<Receipt> take_proper_receipt(Table table);
 };
 
 // problem był z tym że get_free_table musi coś zwracac

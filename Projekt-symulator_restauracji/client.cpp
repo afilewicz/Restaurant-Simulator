@@ -1,4 +1,6 @@
 #include "client.hpp"
+#include <chrono>
+#include <thread>
 
 Client::Client() {}
 
@@ -27,4 +29,10 @@ void Client::make_order(Menu &menu)
 std::vector<MenuItem> Client::get_chosen_dishes() const
 {
     return chosen_dishes;
+}
+
+void Client::eating()
+{
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    switch_flag(is_ready_to_pay);
 }

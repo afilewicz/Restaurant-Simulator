@@ -1,6 +1,7 @@
 #include <memory>
 #include "waiter.hpp"
 #include "restaurant.hpp"
+#include <optional>
 
 Waiter::Waiter(Restaurant &restaurant) : restaurant(restaurant) {}
 
@@ -56,23 +57,24 @@ void Waiter::place_at_table(Table &table, ClientGroup group)
     }
 }
 
-void Waiter::look_for_action()
-{
-    for (auto id : serviced_tables)
-    {
-        if (get_restaurant().get_table_by_id(id).get_ready_to_order())
-        {
-            take_order(id);
-        }
-        if (get_restaurant().get_table_by_id(id).get_ready_for_receipt())
-        {
-            Order &&order = find_order_by_table_id(id).value();
-            give_receipt(get_restaurant().get_table_by_id(id), Receipt(order));
-            get_restaurant().get_table_by_id(id).switch_is_occupied();
-            serviced_tables.erase(id);
-        }
-    }
-}
+
+// void Waiter::look_for_action()
+// {
+//     for (auto id : serviced_tables)
+//     {
+//         if (get_restaurant().get_table_by_id(id).get_ready_to_order())
+//         {
+//             take_order(id);
+//         }
+//         if (get_restaurant().get_table_by_id(id).get_ready_for_receipt())
+//         {
+//             Order &&order = find_order_by_table_id(id).value();
+//             give_receipt(get_restaurant().get_table_by_id(id));
+//             get_restaurant().get_table_by_id(id).switch_is_occupied();
+//             serviced_tables.erase(id);
+//         }
+//     }
+// }
 
 // void Waiter::search_ready_order()
 // {
@@ -119,14 +121,32 @@ void Waiter::take_order(table_id id)
             order.add_dish(menuitem);
         }
     }
-    Receipt receipt = Receipt(order);
+    add_receipt(Receipt(order));
     get_restaurant().get_kitchen().add_to_do_orders(order);
 }
 
-void Waiter::give_receipt(Table table, Receipt receipt)
+void Waiter::give_receipt(Table& table)
 {
-    // table.set_receipt(std::move(receipt));
-    table.switch_ready_for_receipt();
-    table.switch_is_occupied();
+    // std::move nie przenosi obiektu, zostaje on w receipts
+    table.place_receipt(*take_proper_receipt(table));
     serviced_tables.erase(table.get_id());
+}
+
+void Waiter::add_receipt(Receipt receipt)
+{
+    receipts.push_back(receipt);
+}
+
+std::optional<Receipt> Waiter::take_proper_receipt(Table table)
+{
+    uint32_t id = table.get_id();
+    for(auto& receipt: receipts)
+    {
+        if(receipt.get_order().get_table_id() == id)
+        {
+            //nie wiem jak usuwać ten obiekt
+            return receipt;
+        }
+    }
+    return std::nullopt;
 }

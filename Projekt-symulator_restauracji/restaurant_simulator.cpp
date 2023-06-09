@@ -80,24 +80,53 @@ void RestaurantSimulator::let_in_one_group_and_place()
 //         throw NoFreeTableError(first_group.get_clients().size());
 //     }
 // }
+void RestaurantSimulator::make_table_ready(table_id id)
+{
+    Table& table = restaurant_.get_table_by_id(id);
+    for (auto& client: table.get_clients())
+    {
+        client.make_order(restaurant_.get_menu());
+    }
+    table.switch_ready_to_order();
+}
+
+void RestaurantSimulator::clean_table(table_id id)
+{
+    uint32_t seats = restaurant_.get_table_by_id(id).get_num_of_seats();
+    restaurant_.remove_table(id);
+    restaurant_.add_table(Table{id, seats});
+}
 
 void RestaurantSimulator::take_order_from_table(uint32_t table_id)
 {
     if (restaurant_.get_table_by_id(table_id).get_ready_to_order() == true)
     {
         restaurant_.get_waiter().take_order(table_id);
+        restaurant_.get_table_by_id(table_id).switch_ready_to_order();
     }
     else
         return;
 }
 
-void RestaurantSimulator::preaparing_first_order()
+table_id RestaurantSimulator::preaparing_first_order()
 {
-    if (!restaurant_.get_kitchen().get_to_do_orders().empty())
-    {
         Order &order = restaurant_.get_kitchen().get_to_do_orders().front();
         restaurant_.get_kitchen().prepairing_order(order);
+        return order.get_table_id();
+}
+
+void RestaurantSimulator::serve_ready_dish(uint32_t table_id)
+{
+    for(auto dish : get_restaurant().get_kitchen().get_ready_dishes())
+    {
+        restaurant_.get_table_by_id(table_id).add_ready_dish(std::move(dish));
     }
+}
+
+void RestaurantSimulator::bring_receipt_to_table(uint32_t table_id)
+{
+    restaurant_.get_waiter().give_receipt(restaurant_.get_table_by_id(table_id));
+    restaurant_.get_table_by_id(table_id).switch_ready_for_receipt();
 }
 
 std::ostream &RestaurantSimulator::show_tables_info(std::ostream &os)
@@ -108,8 +137,12 @@ std::ostream &RestaurantSimulator::show_tables_info(std::ostream &os)
         auto free_seats = table.get_free_seats();
         os << "\t"
            << "Stolik nr: " << id << ", wolnych miejsc: "
-           << free_seats << "/" << table.get_num_of_seats() << '\n';
+           << free_seats << "/" << table.get_num_of_seats()
+           << ", gotowy do zamówienia: " << table.get_ready_to_order()
+           << ", gotowy do rachunku: " << table.get_ready_for_receipt()
+           << '\n';
     }
+    os  << "\n";
     return os;
 }
 
@@ -117,7 +150,7 @@ std::ostream &RestaurantSimulator::show_queue_info(std::ostream &os)
 {
     if (queue_.empty())
     {
-        os << "Kolejka jest pusta." << std::endl;
+        os << "Kolejka jest pusta."  << "\n" << "\n";
         return os;
     }
     os << "Klienci w kolejce: " << std::endl;
@@ -128,6 +161,7 @@ std::ostream &RestaurantSimulator::show_queue_info(std::ostream &os)
            << group.get_number_of_clients() << '\n';
         counter++;
     }
+    os << "\n";
     return os;
 }
 
@@ -147,5 +181,6 @@ std::ostream &RestaurantSimulator::show_menu(std::ostream &os)
                 os << "     * " << ingredient.get_name() << '\n';
         }
     }
+    os << "\n";
     return os;
 }

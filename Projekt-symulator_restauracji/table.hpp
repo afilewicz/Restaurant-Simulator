@@ -28,6 +28,9 @@ public:
     uint32_t get_num_of_seats() const;
     uint32_t get_free_seats() const;
     void add_client(Client &client);
+    std::list<Dish>& get_ready_dishes();
+    void add_ready_dish(Dish dish);
+    void place_receipt(Receipt new_receipt);
 
 private:
     table_id id;
@@ -37,6 +40,7 @@ private:
     bool ready_for_receipt = false;
     std::list<Order> ready_orders;
     uint32_t number_of_seats_ = 0;
-    // std::optional<Receipt> receipt = std::nullopt;
+    std::list<Dish> ready_dishes;
+    std::optional<Receipt> receipt = std::nullopt;
     // stawianie na stół dań i rachunku
 };

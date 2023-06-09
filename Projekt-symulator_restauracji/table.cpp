@@ -68,3 +68,18 @@ void Table::add_client(Client &client)
 // {
 //     ready_orders.push_back(std::move(order));
 // }
+
+std::list<Dish>& Table::get_ready_dishes()
+{
+    return ready_dishes;
+}
+
+void Table::add_ready_dish(Dish dish)
+{
+    ready_dishes.push_back(dish);
+}
+
+void Table::place_receipt(Receipt new_receipt)
+{
+    receipt.emplace(new_receipt);
+}

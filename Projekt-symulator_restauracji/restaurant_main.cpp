@@ -35,13 +35,28 @@ int main()
     simulator.show_tables_info(os);
     simulator.show_queue_info(os);
 
-    Table& zero_table = simulator.get_restaurant().get_table_by_id(0);
-    Client& first_client = zero_table.get_clients()[0];
-    Client& second_client = zero_table.get_clients()[1];
-    first_client.make_order(simulator.get_restaurant().get_menu());
-    second_client.make_order(simulator.get_restaurant().get_menu());
-    zero_table.switch_ready_to_order();
+    //bedziemy losować table_id
+    simulator.make_table_ready(0);
+    simulator.show_tables_info(os);
 
+    //uzytkownik poda id z którego bedzie losować
     simulator.take_order_from_table(0);
-    simulator.preaparing_first_order();
+    if (!simulator.get_restaurant().get_kitchen().get_to_do_orders().empty())
+    {
+        table_id id = simulator.preaparing_first_order();
+        simulator.serve_ready_dish(id);
+    }
+
+    //do zmiany musi to byc jakis czas po jedzeniu klienta
+    simulator.get_restaurant().get_table_by_id(0).switch_ready_for_receipt();
+
+    simulator.show_tables_info(os);
+
+    if (simulator.get_restaurant().get_table_by_id(0).get_ready_for_receipt())
+    {
+        //ogarnać receipt
+        simulator.bring_receipt_to_table(0);
+        simulator.clean_table(0);
+    }
+    simulator.show_tables_info(os);
 };
