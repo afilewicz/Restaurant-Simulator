@@ -1,10 +1,6 @@
 #include "table.hpp"
 
-Table::Table(uint32_t num_of_seats) : number_of_seats_(num_of_seats)
-{
-    static uint32_t id_counter = 0;
-    id = id_counter++;
-}
+Table::Table(table_id table_id, uint32_t num_of_seats) : id(table_id), number_of_seats_(num_of_seats) {}
 
 Table::Table(){};
 

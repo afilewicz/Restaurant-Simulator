@@ -44,13 +44,17 @@ void RestaurantSimulator::add_clients_to_queue(uint8_t num_of_clients)
 void RestaurantSimulator::let_in_one_group_and_place()
 {
     if (queue_.empty())
-        throw EmptyQueueError();
+        {
+            return;
+        }
     ClientGroup first_group = queue_.front();
     std::optional<Table> table = restaurant_.get_waiter().get_free_table(first_group.get_number_of_clients());
     if (table)
     {
         restaurant_.get_waiter().place_at_table(*table, first_group);
         queue_.pop_front();
+        restaurant_.remove_table(table.value().get_id());
+        restaurant_.add_table(table.value());
     }
     else
         throw NoFreeTableError(first_group.get_clients().size());
@@ -88,6 +92,11 @@ std::ostream &RestaurantSimulator::show_tables_info(std::ostream &os)
 
 std::ostream &RestaurantSimulator::show_queue_info(std::ostream &os)
 {
+    if (queue_.empty())
+    {
+        os << "Kolejka jest pusta." << std::endl;
+        return os;
+    }
     os << "Klienci w kolejce: " << std::endl;
     uint16_t counter = 1;
     for (const auto &group : queue_)

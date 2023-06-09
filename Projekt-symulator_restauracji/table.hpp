@@ -12,7 +12,7 @@ using table_id = uint32_t;
 class Table
 {
 public:
-    Table(uint32_t num_of_seats);
+    Table(table_id id, uint32_t num_of_seats);
     Table();
     table_id get_id() const;
     bool get_is_occupied() const;
