@@ -1,5 +1,5 @@
-// #include "catch_amalgamated.hpp"
-// #include "../menu.hpp"
+#include "catch_amalgamated.hpp"
+#include "../menu.hpp"
 
 TEST_CASE("Menu constructor")
 {
