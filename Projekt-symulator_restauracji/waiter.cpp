@@ -120,7 +120,7 @@ void Waiter::take_order(table_id id)
         }
     }
     Receipt receipt = Receipt(order);
-    add_to(get_restaurant().get_kitchen().get_to_do_orders(), order);
+    get_restaurant().get_kitchen().add_to_do_orders(order);
 }
 
 void Waiter::give_receipt(Table table, Receipt receipt)

@@ -4,6 +4,10 @@
 
 RestaurantSimulator::RestaurantSimulator(Restaurant &&restaurant) : restaurant_(restaurant) {}
 
+Restaurant& RestaurantSimulator::get_restaurant()
+{
+    return restaurant_;
+}
 void RestaurantSimulator::set_restaurant_attributes(std::string menu_path, std::string tables_path)
 {
     Menu menu = load_menu(menu_path);
@@ -76,6 +80,25 @@ void RestaurantSimulator::let_in_one_group_and_place()
 //         throw NoFreeTableError(first_group.get_clients().size());
 //     }
 // }
+
+void RestaurantSimulator::take_order_from_table(uint32_t table_id)
+{
+    if (restaurant_.get_table_by_id(table_id).get_ready_to_order() == true)
+    {
+        restaurant_.get_waiter().take_order(table_id);
+    }
+    else
+        return;
+}
+
+void RestaurantSimulator::preaparing_first_order()
+{
+    if (!restaurant_.get_kitchen().get_to_do_orders().empty())
+    {
+        Order &order = restaurant_.get_kitchen().get_to_do_orders().front();
+        restaurant_.get_kitchen().prepairing_order(order);
+    }
+}
 
 std::ostream &RestaurantSimulator::show_tables_info(std::ostream &os)
 {

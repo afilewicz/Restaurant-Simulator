@@ -22,12 +22,14 @@ public:
     std::list<Dish> &get_ready_dishes();
     std::list<Order> &get_ready_orders();
     std::list<Order> &get_to_do_orders();
-    void prepairing_order(Order);
+    void prepairing_order(Order& order);
+    void add_to_do_orders(Order order);
+    void remove_from_ready_orders(Order order);
 
     // funkcje poza klasą
     template <typename L, typename O>
-    friend void add_to(L, O);
+    friend void add_to(L&, O);
 
     template <typename L, typename O>
-    friend void remove_from(L, O);
+    friend void remove_from(L&, O);
 };
