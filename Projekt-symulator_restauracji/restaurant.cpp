@@ -27,7 +27,7 @@ Kitchen &Restaurant::get_kitchen()
     return kitchen.value();
 }
 
-void Restaurant::add_table(Table table)
+void Restaurant::add_table(const Table table)
 {
     tables[table.get_id()] = table;
 }
@@ -57,7 +57,7 @@ void Restaurant::set_menu(Menu &new_menu)
     menu.emplace(new_menu);
 }
 
-void Restaurant::set_tables(std::map<table_id, Table> &new_tables)
+void Restaurant::set_tables(const std::map<table_id, Table> &new_tables)
 {
     tables = new_tables;
 }

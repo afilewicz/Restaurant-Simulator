@@ -1,8 +1,8 @@
 #include "order.hpp"
 
-Order::Order(uint32_t table_id) : table_id_(table_id) {}
+Order::Order(table_id table_id) : table_id_(table_id) {}
 
-uint32_t Order::get_table_id() const
+table_id Order::get_table_id() const
 {
     return table_id_;
 }
@@ -22,7 +22,7 @@ void Order::switch_is_ready()
     is_ready = !is_ready;
 }
 
-void Order::add_dish(MenuItem &dish)
+void Order::add_dish(const MenuItem &dish)
 {
     ordered_dishes.push_back(dish);
 }

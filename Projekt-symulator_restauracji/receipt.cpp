@@ -1,8 +1,9 @@
 #include "receipt.hpp"
-//#include "price_formatter.hpp"
 #include <numeric>
 
-Receipt::Receipt(Order order) : order_(order) {}
+std::string format_price(int price);
+
+Receipt::Receipt(const Order order) : order_(order) {}
 
 Order &Receipt::get_order()
 {
@@ -19,7 +20,7 @@ std::ostream &Receipt::show_receipt(std::ostream &os)
 {
     os << "Receipt nr " << order_.get_table_id() << std::endl;
     for (const auto &dish : order_.get_ordered_dishes())
-        os << "\t" << dish.get_name() << " - " << dish.get_price() << std::endl;
-    os << "Total: " << get_total_price() << std::endl;
+        os << "\t" << dish.get_name() << " - " << format_price(dish.get_price()) << std::endl;
+    os << "\t" <<"Total: " << format_price(get_total_price()) << std::endl;
     return os;
 }

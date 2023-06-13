@@ -1,4 +1,5 @@
 #include "restaurant_simulator.hpp"
+#include "price_formatter.hpp"
 #include <iostream>
 
 uint16_t ask_for_number_of_clients()

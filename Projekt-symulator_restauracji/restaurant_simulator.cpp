@@ -1,6 +1,7 @@
 #include "restaurant_simulator.hpp"
-#include "price_formatter.hpp"
 #include <random>
+
+std::string format_price(int price);
 
 RestaurantSimulator::RestaurantSimulator(Restaurant &&restaurant) : restaurant_(restaurant) {}
 
@@ -97,7 +98,7 @@ void RestaurantSimulator::clean_table(table_id id)
     restaurant_.add_table(Table{id, seats});
 }
 
-void RestaurantSimulator::take_order_from_table(uint32_t table_id)
+void RestaurantSimulator::take_order_from_table(table_id table_id)
 {
     if (restaurant_.get_table_by_id(table_id).get_ready_to_order() == true)
     {
@@ -115,7 +116,7 @@ table_id RestaurantSimulator::preaparing_first_order()
         return order.get_table_id();
 }
 
-void RestaurantSimulator::serve_ready_dish(uint32_t table_id)
+void RestaurantSimulator::serve_ready_dish(table_id table_id)
 {
     for(auto dish : get_restaurant().get_kitchen().get_ready_dishes())
     {
@@ -123,7 +124,7 @@ void RestaurantSimulator::serve_ready_dish(uint32_t table_id)
     }
 }
 
-void RestaurantSimulator::bring_receipt_to_table(uint32_t table_id)
+void RestaurantSimulator::bring_receipt_to_table(table_id table_id)
 {
     restaurant_.get_waiter().give_receipt(restaurant_.get_table_by_id(table_id));
     restaurant_.get_table_by_id(table_id).switch_ready_for_receipt();

@@ -1,6 +1,6 @@
 #include "dish.hpp"
 
-Dish::Dish(MenuItem &menuitem) : name(menuitem.get_name())
+Dish::Dish(const MenuItem &menuitem) : name(menuitem.get_name())
 {
     time_to_prepare = 0;
     is_ready = false;

@@ -49,12 +49,12 @@ const std::list<Ingredient> &MenuItem::get_ingredients() const
     return ingredients_;
 }
 
-void MenuItem::add_ingredient(Ingredient &new_ingredient)
+void MenuItem::add_ingredient(const Ingredient &new_ingredient)
 {
     ingredients_.push_back(new_ingredient);
 }
 
-void MenuItem::remove_ingredient(Ingredient &ingredient_to_remove)
+void MenuItem::remove_ingredient(const Ingredient &ingredient_to_remove)
 {
     if (ingredients_.empty())
         throw std::logic_error("Can not remove ingredient from epmty list.");
@@ -63,7 +63,7 @@ void MenuItem::remove_ingredient(Ingredient &ingredient_to_remove)
     ingredients_.remove(ingredient_to_remove);
 }
 
-bool MenuItem::is_ingredient_in_list(Ingredient &ingredient_to_remove) const
+bool MenuItem::is_ingredient_in_list(const Ingredient &ingredient_to_remove) const
 {
     return (std::find(ingredients_.begin(), ingredients_.end(), ingredient_to_remove) != ingredients_.end());
 }

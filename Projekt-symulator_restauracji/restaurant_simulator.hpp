@@ -1,3 +1,4 @@
+#pragma once
 #include "restaurant.hpp"
 #include "read_menu.hpp"
 #include "read_tables.hpp"
@@ -13,10 +14,10 @@ public:
     void let_in_one_group_and_place();
     void make_table_ready(table_id id);
     void clean_table(table_id id);
-    void take_order_from_table(uint32_t table_id);
+    void take_order_from_table(table_id table_id);
     table_id preaparing_first_order();
-    void serve_ready_dish(uint32_t table_id);
-    void bring_receipt_to_table(uint32_t table_id);
+    void serve_ready_dish(table_id table_id);
+    void bring_receipt_to_table(table_id table_id);
     std::ostream &show_tables_info(std::ostream &os);
     std::ostream &show_queue_info(std::ostream &os);
     std::ostream &show_menu(std::ostream &os);

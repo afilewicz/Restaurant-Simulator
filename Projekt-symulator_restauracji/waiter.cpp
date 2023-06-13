@@ -1,7 +1,8 @@
 #include <memory>
+#include <optional>
 #include "waiter.hpp"
 #include "restaurant.hpp"
-#include <optional>
+
 
 Waiter::Waiter(Restaurant &restaurant) : restaurant(restaurant) {}
 
@@ -9,18 +10,6 @@ Restaurant &Waiter::get_restaurant()
 {
     return restaurant;
 }
-
-// std::optional (unikać nullptr)
-
-// std::optional<Table> Waiter::get_free_table(uint32_t num_of_clients)
-// {
-//     for (auto &[id, table] : get_restaurant().get_tables())
-//     {
-//         if (!table.get_is_occupied() && table.get_num_of_seats() >= num_of_clients)
-//             return table;
-//     }
-//     return std::nullopt;
-// }
 
 Table &Waiter::get_free_table(uint32_t num_of_clients)
 {
@@ -32,12 +21,12 @@ Table &Waiter::get_free_table(uint32_t num_of_clients)
     throw NoFreeTableError(num_of_clients);
 }
 
-std::set<table_id> Waiter::get_serviced_tables()
+std::set<table_id> Waiter::get_serviced_tables() const
 {
     return serviced_tables;
 }
 
-bool Waiter::get_is_busy()
+bool Waiter::get_is_busy() const
 {
     return is_busy;
 }
@@ -90,7 +79,7 @@ std::list<Order> &Waiter::get_accepted_orders()
     return accepted_orders;
 }
 
-void Waiter::add_accepted_order(std::optional<Order> order)
+void Waiter::add_accepted_order(const std::optional<Order> order)
 {
     accepted_orders.push_back(order.value());
 }
@@ -132,14 +121,14 @@ void Waiter::give_receipt(Table& table)
     serviced_tables.erase(table.get_id());
 }
 
-void Waiter::add_receipt(Receipt receipt)
+void Waiter::add_receipt(const Receipt receipt)
 {
     receipts.push_back(receipt);
 }
 
-std::optional<Receipt> Waiter::take_proper_receipt(Table table)
+std::optional<Receipt> Waiter::take_proper_receipt(const Table table)
 {
-    uint32_t id = table.get_id();
+    table_id id = table.get_id();
     for(auto& receipt: receipts)
     {
         if(receipt.get_order().get_table_id() == id)

@@ -1,6 +1,7 @@
 #include "kitchen.hpp"
 #include <chrono>
 #include <thread>
+#include "functions.hpp"
 
 Kitchen::Kitchen(Restaurant &restaurant) : restaurant(restaurant) {}
 
@@ -32,24 +33,12 @@ void Kitchen::prepairing_order(Order &order)
     to_do_orders.remove(order);
 }
 
-void Kitchen::add_to_do_orders(Order order)
+void Kitchen::add_to_do_orders(const Order order)
 {
     to_do_orders.push_back(order);
 }
 
-void Kitchen::remove_from_ready_orders(Order order)
+void Kitchen::remove_from_ready_orders(const Order order)
 {
     ready_orders.remove(order);
-}
-
-template <typename L, typename O>
-void add_to(L& list_of_orders, O order)
-{
-    list_of_orders.push_back(order);
-}
-
-template <typename L, typename O>
-void remove_from(L& list_of_orders, O order)
-{
-    list_of_orders.remove(order);
 }

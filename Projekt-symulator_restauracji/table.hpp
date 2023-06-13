@@ -1,13 +1,12 @@
 #pragma once
 #include <vector>
 #include <list>
-#include <memory>
 #include <optional>
 #include "client.hpp"
-#include "order.hpp"
 #include "receipt.hpp"
+#include "table.hpp"
 
-using table_id = uint32_t;
+class Order;
 
 class Table
 {
@@ -23,15 +22,14 @@ public:
     std::vector<Client> &get_clients();
     bool get_ready_for_receipt() const;
     void get_ready_dishes() const;
-    void place_order_on_table(Order &);
     void switch_ready_for_receipt();
     uint32_t get_num_of_seats() const;
     uint32_t get_free_seats() const;
-    void add_client(Client &client);
+    void add_client(const Client &client);
     std::list<Dish>& get_ready_dishes();
-    void add_ready_dish(Dish dish);
-    void place_receipt(Receipt new_receipt);
-    Receipt get_receipt();
+    void add_ready_dish(const Dish dish);
+    void place_receipt(const Receipt new_receipt);
+    Receipt get_receipt() const;
 
 private:
     table_id id;

@@ -1,0 +1,1 @@
+using table_id = uint32_t;

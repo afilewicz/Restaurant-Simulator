@@ -4,7 +4,7 @@
 class ClientGroup
 {
 public:
-    ClientGroup(std::vector<Client> clients);
+    ClientGroup(const std::vector<Client> clients);
     uint32_t get_number_of_clients() const;
     std::vector<Client> &get_clients();
 

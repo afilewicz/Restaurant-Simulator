@@ -13,7 +13,7 @@ private:
     bool is_ready;
 
 public:
-    Dish(MenuItem &);
+    Dish(const MenuItem &);
     std::string get_name() const;
     time_ get_time_to_prepare() const;
     bool get_is_ready() const;

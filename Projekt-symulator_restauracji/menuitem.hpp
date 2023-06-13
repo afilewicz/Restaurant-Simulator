@@ -13,13 +13,13 @@ public:
     void set_price(const int new_price);
     float get_total_calories() const;
     const std::list<Ingredient> &get_ingredients() const;
-    void add_ingredient(Ingredient &new_ingredient);
-    void remove_ingredient(Ingredient &ingredient_to_remove);
+    void add_ingredient(const Ingredient &new_ingredient);
+    void remove_ingredient(const Ingredient &ingredient_to_remove);
     bool operator==(const MenuItem &other_menuitem) const;
 
 private:
     std::string name_;
     int price_;
     std::list<Ingredient> ingredients_;
-    bool is_ingredient_in_list(Ingredient &ingredient_to_remove) const;
+    bool is_ingredient_in_list(const Ingredient &ingredient_to_remove) const;
 };

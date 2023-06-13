@@ -1,8 +1,9 @@
 #pragma once
 #include <vector>
-#include "menuitem.hpp"
 #include "menu.hpp"
 #include "menu_section.hpp"
+
+class MenuItem;
 
 class Client
 {
