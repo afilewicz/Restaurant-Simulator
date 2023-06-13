@@ -31,6 +31,7 @@ public:
     std::list<Dish>& get_ready_dishes();
     void add_ready_dish(Dish dish);
     void place_receipt(Receipt new_receipt);
+    Receipt get_receipt();
 
 private:
     table_id id;

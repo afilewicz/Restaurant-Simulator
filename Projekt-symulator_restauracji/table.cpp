@@ -83,3 +83,8 @@ void Table::place_receipt(Receipt new_receipt)
 {
     receipt.emplace(new_receipt);
 }
+
+Receipt Table::get_receipt()
+{
+    return receipt.value();
+}

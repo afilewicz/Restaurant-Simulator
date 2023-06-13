@@ -6,7 +6,6 @@ class Receipt
 {
 private:
     Order order_;
-    int total_price_;
 
 public:
     Receipt(Order order);

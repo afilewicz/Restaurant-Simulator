@@ -1,4 +1,4 @@
-#include <iostream>
+#pragma once
 
 const std::string currency = "PLN";
 

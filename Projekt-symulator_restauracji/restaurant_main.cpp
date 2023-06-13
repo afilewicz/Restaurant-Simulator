@@ -56,6 +56,7 @@ int main()
     {
         //ogarnać receipt
         simulator.bring_receipt_to_table(0);
+        simulator.get_restaurant().get_table_by_id(0).get_receipt().show_receipt(os);
         simulator.clean_table(0);
     }
     simulator.show_tables_info(os);
