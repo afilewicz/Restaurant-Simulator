@@ -2,9 +2,7 @@
 #include <stdexcept>
 #include "exceptions.hpp"
 
-Menu::Menu()
-{
-}
+Menu::Menu() {}
 
 std::list<MenuSection> &Menu::get_menu_sections()
 {

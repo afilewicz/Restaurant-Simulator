@@ -1,18 +1,17 @@
 #pragma once
 #include <vector>
 #include <list>
-#include <memory>
 #include <optional>
 #include "client.hpp"
-#include "order.hpp"
 #include "receipt.hpp"
+#include "table.hpp"
 
-using table_id = uint32_t;
+class Order;
 
 class Table
 {
 public:
-    Table(uint32_t num_of_seats);
+    Table(table_id id, uint32_t num_of_seats);
     Table();
     table_id get_id() const;
     bool get_is_occupied() const;
@@ -23,11 +22,14 @@ public:
     std::vector<Client> &get_clients();
     bool get_ready_for_receipt() const;
     void get_ready_dishes() const;
-    void place_order_on_table(Order &);
     void switch_ready_for_receipt();
     uint32_t get_num_of_seats() const;
     uint32_t get_free_seats() const;
-    void add_client(Client &client);
+    void add_client(const Client &client);
+    std::list<Dish>& get_ready_dishes();
+    void add_ready_dish(const Dish dish);
+    void place_receipt(const Receipt new_receipt);
+    Receipt get_receipt() const;
 
 private:
     table_id id;
@@ -37,6 +39,7 @@ private:
     bool ready_for_receipt = false;
     std::list<Order> ready_orders;
     uint32_t number_of_seats_ = 0;
-    // std::optional<Receipt> receipt = std::nullopt;
+    std::list<Dish> ready_dishes;
+    std::optional<Receipt> receipt = std::nullopt;
     // stawianie na stół dań i rachunku
 };

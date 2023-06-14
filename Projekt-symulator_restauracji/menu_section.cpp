@@ -28,7 +28,7 @@ const std::map<Dish_name, MenuItem> &MenuSection::get_menu_items() const
     return menu_items_;
 }
 
-MenuItem MenuSection::get_menu_item_by_name(Dish_name dish_name)
+MenuItem MenuSection::get_menu_item_by_name(const Dish_name dish_name)
 {
     std::map<Dish_name, MenuItem>::iterator it = menu_items_.find(dish_name);
     if (it == menu_items_.end())
@@ -38,7 +38,7 @@ MenuItem MenuSection::get_menu_item_by_name(Dish_name dish_name)
     return it->second;
 }
 
-void MenuSection::add_menu_item(MenuItem menu_item)
+void MenuSection::add_menu_item(const MenuItem menu_item)
 {
     std::pair<std::map<Dish_name, MenuItem>::iterator, bool> ret;
     ret = menu_items_.insert(std::pair<Dish_name, MenuItem>(menu_item.get_name(), menu_item));
@@ -48,7 +48,7 @@ void MenuSection::add_menu_item(MenuItem menu_item)
     }
 }
 
-void MenuSection::remove_menu_item(Dish_name dish_name)
+void MenuSection::remove_menu_item(const Dish_name dish_name)
 {
     MenuItem menu_item = get_menu_item_by_name(dish_name);
     menu_items_.erase(menu_item.get_name());

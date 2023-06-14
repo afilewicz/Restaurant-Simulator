@@ -1,12 +1,8 @@
 #include "table.hpp"
 
-Table::Table(uint32_t num_of_seats) : number_of_seats_(num_of_seats)
-{
-    static uint32_t id_counter = 0;
-    id = id_counter++;
-}
+Table::Table(table_id table_id, uint32_t num_of_seats) : id(table_id), number_of_seats_(num_of_seats) {}
 
-Table::Table(){};
+Table::Table() {};
 
 table_id Table::get_id() const
 {
@@ -63,12 +59,27 @@ uint32_t Table::get_free_seats() const
     return number_of_seats_ - clients.size();
 }
 
-void Table::add_client(Client &client)
+void Table::add_client(const Client &client)
 {
     clients.push_back(client);
 }
 
-// void Table::add_ready_order(Order &order)
-// {
-//     ready_orders.push_back(std::move(order));
-// }
+std::list<Dish> &Table::get_ready_dishes()
+{
+    return ready_dishes;
+}
+
+void Table::add_ready_dish(const Dish dish)
+{
+    ready_dishes.push_back(dish);
+}
+
+void Table::place_receipt(const Receipt new_receipt)
+{
+    receipt.emplace(new_receipt);
+}
+
+Receipt Table::get_receipt() const
+{
+    return receipt.value();
+}
