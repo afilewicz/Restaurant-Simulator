@@ -6,7 +6,6 @@
 #include "client_group.hpp"
 #include "exceptions.hpp"
 
-
 class Waiter
 {
 private:
@@ -24,10 +23,8 @@ public:
     std::set<table_id> get_serviced_tables() const;
     bool get_is_busy() const;
     void switch_busy();
-    void place_at_table(Table&, ClientGroup);
-    void look_for_action();
-    void give_receipt(Table&);
-    void search_ready_order();
+    void place_at_table(Table &, ClientGroup);
+    void give_receipt(Table &);
     std::list<Order> &get_accepted_orders();
     void add_accepted_order(const std::optional<Order>);
     std::optional<Order> find_order_by_table_id(table_id);

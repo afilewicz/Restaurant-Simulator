@@ -8,7 +8,7 @@ std::string format_price(int price);
 
 RestaurantSimulator::RestaurantSimulator(Restaurant &&restaurant) : restaurant_(restaurant) {}
 
-Restaurant& RestaurantSimulator::get_restaurant()
+Restaurant &RestaurantSimulator::get_restaurant()
 {
     return restaurant_;
 }
@@ -33,7 +33,7 @@ Menu RestaurantSimulator::load_menu(std::string path_to_file)
 
 std::map<std::string, time_> RestaurantSimulator::load_time_to_prepare(std::string path_to_file)
 {
-    std::map<std::string, time_> time_to_prepare {};
+    std::map<std::string, time_> time_to_prepare{};
     read_time_to_prepare(path_to_file, time_to_prepare);
     return time_to_prepare;
 }
@@ -63,9 +63,9 @@ void RestaurantSimulator::add_clients_to_queue(uint8_t num_of_clients)
 void RestaurantSimulator::let_in_one_group_and_place()
 {
     if (queue_.empty())
-        {
-            return;
-        }
+    {
+        return;
+    }
     ClientGroup first_group = queue_.front();
     std::optional<Table> table = restaurant_.get_waiter().get_free_table(first_group.get_number_of_clients());
     if (table)
@@ -97,8 +97,8 @@ void RestaurantSimulator::let_in_one_group_and_place()
 // }
 void RestaurantSimulator::make_table_ready(table_id id)
 {
-    Table& table = restaurant_.get_table_by_id(id);
-    for (auto& client: table.get_clients())
+    Table &table = restaurant_.get_table_by_id(id);
+    for (auto &client : table.get_clients())
     {
         client.make_order(restaurant_.get_menu());
     }
@@ -114,6 +114,7 @@ void RestaurantSimulator::clean_table(table_id id)
 
 void RestaurantSimulator::take_order_from_table(table_id table_id)
 {
+    // wyjątek
     if (restaurant_.get_table_by_id(table_id).get_ready_to_order() == true)
     {
         restaurant_.get_waiter().take_order(table_id);
@@ -125,14 +126,15 @@ void RestaurantSimulator::take_order_from_table(table_id table_id)
 
 table_id RestaurantSimulator::preaparing_first_order()
 {
-        Order &order = restaurant_.get_kitchen().get_to_do_orders().front();
-        restaurant_.get_kitchen().prepairing_order(order);
-        return order.get_table_id();
+    Order &order = restaurant_.get_kitchen().get_to_do_orders().front();
+    restaurant_.get_kitchen().prepairing_order(order);
+    return order.get_table_id();
 }
 
 void RestaurantSimulator::serve_ready_dish(table_id table_id)
 {
-    for(auto dish : get_restaurant().get_kitchen().get_ready_dishes())
+    // metoda ma brać całe zamównieni, jeżeli jest gotowe
+    for (auto dish : get_restaurant().get_kitchen().get_ready_dishes())
     {
         restaurant_.get_table_by_id(table_id).add_ready_dish(std::move(dish));
     }
@@ -165,7 +167,7 @@ std::ostream &RestaurantSimulator::show_tables_info(std::ostream &os)
            << ", gotowy do rachunku: " << table.get_ready_for_receipt()
            << '\n';
     }
-    os  << "\n";
+    os << "\n";
     return os;
 }
 
@@ -173,7 +175,9 @@ std::ostream &RestaurantSimulator::show_queue_info(std::ostream &os)
 {
     if (queue_.empty())
     {
-        os << "Kolejka jest pusta."  << "\n" << "\n";
+        os << "Kolejka jest pusta."
+           << "\n"
+           << "\n";
         return os;
     }
     os << "Klienci w kolejce: " << std::endl;

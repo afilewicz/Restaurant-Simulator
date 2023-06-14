@@ -37,17 +37,17 @@ int main()
     simulator.show_tables_info(os);
     simulator.show_queue_info(os);
 
-    //losowanie do momentu wylosowania zajetego stolika
+    // losowanie do momentu wylosowania zajetego stolika
     table_id id;
     do
     {
         id = simulator.drawn_id();
-    } while(simulator.get_restaurant().get_table_by_id(id).get_is_occupied()!=true);
+    } while (simulator.get_restaurant().get_table_by_id(id).get_is_occupied() != true);
 
     simulator.make_table_ready(id);
     simulator.show_tables_info(os);
 
-    //uzytkownik poda id z którego bedzie chcial cos robic
+    // uzytkownik poda id z którego bedzie chcial cos robic
     table_id user_id = id;
 
     simulator.take_order_from_table(user_id);
@@ -62,17 +62,17 @@ int main()
         os << "This table isn't occupied, choose another table." << std::endl;
     }
 
-    //do zmiany musi to byc jakis czas po jedzeniu klienta
+    // do zmiany musi to byc jakis czas po jedzeniu klienta
     if (simulator.get_restaurant().get_table_by_id(user_id).get_is_occupied())
     {
-    simulator.get_restaurant().get_table_by_id(user_id).switch_ready_for_receipt();
+        simulator.get_restaurant().get_table_by_id(user_id).switch_ready_for_receipt();
     }
 
     simulator.show_tables_info(os);
 
     if (simulator.get_restaurant().get_table_by_id(user_id).get_ready_for_receipt())
     {
-        //ogarnać receipt
+        // ogarnać receipt
         simulator.bring_receipt_to_table(user_id);
         simulator.get_restaurant().get_table_by_id(user_id).get_receipt().show_receipt(os);
         simulator.clean_table(user_id);

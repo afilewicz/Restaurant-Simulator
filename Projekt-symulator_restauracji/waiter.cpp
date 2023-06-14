@@ -3,7 +3,6 @@
 #include "waiter.hpp"
 #include "restaurant.hpp"
 
-
 Waiter::Waiter(Restaurant &restaurant) : restaurant(restaurant) {}
 
 Restaurant &Waiter::get_restaurant()
@@ -45,7 +44,6 @@ void Waiter::place_at_table(Table &table, ClientGroup group)
         table.add_client(client);
     }
 }
-
 
 // void Waiter::look_for_action()
 // {
@@ -102,7 +100,7 @@ void Waiter::remove_accepted_order(table_id id)
 
 void Waiter::take_order(table_id id)
 {
-    Order order = Order(id);
+    Order order = Order{id};
     for (auto &client : get_restaurant().get_table_by_id(id).get_clients())
     {
         for (auto &menuitem : client.get_chosen_dishes())
@@ -110,11 +108,11 @@ void Waiter::take_order(table_id id)
             order.add_dish(menuitem);
         }
     }
-    add_receipt(Receipt(order));
+    add_receipt(Receipt{order});
     get_restaurant().get_kitchen().add_to_do_orders(order);
 }
 
-void Waiter::give_receipt(Table& table)
+void Waiter::give_receipt(Table &table)
 {
     // std::move nie przenosi obiektu, zostaje on w receipts
     table.place_receipt(*take_proper_receipt(table));
@@ -129,11 +127,11 @@ void Waiter::add_receipt(const Receipt receipt)
 std::optional<Receipt> Waiter::take_proper_receipt(const Table table)
 {
     table_id id = table.get_id();
-    for(auto& receipt: receipts)
+    for (auto &receipt : receipts)
     {
-        if(receipt.get_order().get_table_id() == id)
+        if (receipt.get_order().get_table_id() == id)
         {
-            //nie wiem jak usuwać ten obiekt
+            // nie wiem jak usuwać ten obiekt
             return receipt;
         }
     }
