@@ -1,6 +1,7 @@
 #include "client.hpp"
 #include <chrono>
 #include <thread>
+#include <random>
 
 Client::Client() {}
 
@@ -21,7 +22,16 @@ void Client::switch_flag(bool &flag)
 
 void Client::make_order(Menu &menu)
 {
-    MenuItem menu_item = menu.get_menu_section_by_name("Przystawki")->get_menu_item_by_name("Chipsy z sosem");
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> menu_section_distribution(0, menu.get_menu_sections().size() - 1);
+    std::uniform_int_distribution<> menu_item_distribution(0, menu.get_menu_sections().begin()->get_menu_items().size() - 1);
+    auto menu_section_it = menu.get_menu_sections().begin();
+    std::advance(menu_section_it, menu_section_distribution(gen));
+    auto menu_item_it = menu_section_it->get_menu_items().begin();
+    std::advance(menu_item_it, menu_item_distribution(gen));
+    MenuItem menu_item = menu_item_it->second;
+
     chosen_dishes.push_back(menu_item);
     switch_flag(is_ready_to_order);
 }

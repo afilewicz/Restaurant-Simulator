@@ -1,11 +1,11 @@
-template <typename L, typename O>
-void add_to(L list_of_orders, O order)
+template <typename List, typename Order>
+void add_to(List list_of_orders, Order order)
 {
     list_of_orders.push_back(order);
 }
 
-template <typename L, typename O>
-void remove_from(L list_of_orders, O order)
+template <typename List, typename Order>
+void remove_from(List list_of_orders, Order order)
 {
     list_of_orders.remove(order);
 }

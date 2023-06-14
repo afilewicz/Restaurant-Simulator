@@ -1,6 +1,7 @@
 #pragma once
 
 #include <list>
+#include <map>
 #include "order.hpp"
 
 class Restaurant;
@@ -12,6 +13,7 @@ private:
     std::list<Order> ready_orders;
     std::list<Order> to_do_orders;
     Restaurant &restaurant;
+    std::map<std::string, time_> time_to_prepare;
 
 public:
     Kitchen(Restaurant &);
@@ -23,6 +25,7 @@ public:
     void prepairing_order(Order& order);
     void add_to_do_orders(const Order order);
     void remove_from_ready_orders(const Order order);
+    void set_time_to_prepare(const std::map<std::string, time_> &new_time_to_prepare);
 
     // funkcje poza klasą
     template <typename L, typename O>

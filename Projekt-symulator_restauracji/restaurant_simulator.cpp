@@ -1,5 +1,8 @@
 #include "restaurant_simulator.hpp"
+#include "read_preparing_time.hpp"
+#include "table_id.hpp"
 #include <random>
+#include <map>
 
 std::string format_price(int price);
 
@@ -18,6 +21,7 @@ void RestaurantSimulator::set_restaurant_attributes(std::string menu_path, std::
     restaurant_.set_waiter(waiter);
     restaurant_.set_kitchen(kitchen);
     restaurant_.set_menu(menu);
+    restaurant_.get_kitchen().set_time_to_prepare(load_time_to_prepare(menu_path));
 }
 
 Menu RestaurantSimulator::load_menu(std::string path_to_file)
@@ -25,6 +29,13 @@ Menu RestaurantSimulator::load_menu(std::string path_to_file)
     Menu menu{};
     read_from_csv<MenuItem, Menu, Ingredient>(path_to_file, menu);
     return menu;
+}
+
+std::map<std::string, time_> RestaurantSimulator::load_time_to_prepare(std::string path_to_file)
+{
+    std::map<std::string, time_> time_to_prepare {};
+    read_time_to_prepare(path_to_file, time_to_prepare);
+    return time_to_prepare;
 }
 
 void RestaurantSimulator::load_tables(std::string path_to_file)
@@ -37,7 +48,10 @@ void RestaurantSimulator::add_clients_to_queue(uint8_t num_of_clients)
     for (size_t i = 0; i < num_of_clients; i++)
     {
         std::vector<Client> clients = {};
-        size_t n = rand() % 6 + 1;
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<size_t> dis(1, 6);
+        size_t n = dis(gen);
         for (size_t j = 0; j < n; j++)
         {
             clients.emplace_back(Client{});
@@ -128,6 +142,14 @@ void RestaurantSimulator::bring_receipt_to_table(table_id table_id)
 {
     restaurant_.get_waiter().give_receipt(restaurant_.get_table_by_id(table_id));
     restaurant_.get_table_by_id(table_id).switch_ready_for_receipt();
+}
+
+table_id RestaurantSimulator::drawn_id()
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<table_id> dis(0, get_restaurant().get_tables().size() - 1);
+    return dis(gen);
 }
 
 std::ostream &RestaurantSimulator::show_tables_info(std::ostream &os)

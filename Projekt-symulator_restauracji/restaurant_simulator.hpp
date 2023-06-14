@@ -18,12 +18,14 @@ public:
     table_id preaparing_first_order();
     void serve_ready_dish(table_id table_id);
     void bring_receipt_to_table(table_id table_id);
+    table_id drawn_id();
     std::ostream &show_tables_info(std::ostream &os);
     std::ostream &show_queue_info(std::ostream &os);
     std::ostream &show_menu(std::ostream &os);
 
 private:
     Menu load_menu(std::string path_to_file);
+    std::map<std::string, time_> load_time_to_prepare(std::string path_to_file);
     void load_tables(std::string path_to_file);
 
     Restaurant restaurant_;
