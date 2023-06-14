@@ -2,6 +2,7 @@
 #include <list>
 #include "dish.hpp"
 #include "table_id.hpp"
+#include "ready_order.hpp"
 
 class Order
 {

@@ -59,3 +59,9 @@ class EmptyQueueError : public std::invalid_argument
 public:
     EmptyQueueError() : std::invalid_argument("Queue is empty") {}
 };
+
+class OrderNotFoundError : public std::invalid_argument
+{
+public:
+    OrderNotFoundError(uint32_t id) : std::invalid_argument("Order with given id not found: " + id) {}
+};

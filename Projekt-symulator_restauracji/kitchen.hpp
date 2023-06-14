@@ -3,7 +3,6 @@
 #include <list>
 #include <map>
 #include "order.hpp"
-#include "ready_order.hpp"
 
 class Restaurant;
 

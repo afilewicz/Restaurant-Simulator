@@ -55,7 +55,7 @@ int main()
     {
         os << "The dishes are being prepaired ..." << std::endl;
         table_id id = simulator.preaparing_first_order();
-        simulator.serve_ready_dish(id);
+        simulator.serve_ready_order(id);
     }
     else
     {

@@ -2,7 +2,7 @@
 
 Table::Table(table_id table_id, uint32_t num_of_seats) : id(table_id), number_of_seats_(num_of_seats) {}
 
-Table::Table() {};
+Table::Table(){};
 
 table_id Table::get_id() const
 {
@@ -69,9 +69,10 @@ std::list<Dish> &Table::get_ready_dishes()
     return ready_dishes;
 }
 
-void Table::add_ready_dish(const Dish dish)
+void Table::add_ready_order(ReadyOrder order)
 {
-    ready_dishes.push_back(dish);
+    for (const auto &dish : order.get_dishes())
+        ready_dishes.push_back(dish);
 }
 
 void Table::place_receipt(const Receipt new_receipt)

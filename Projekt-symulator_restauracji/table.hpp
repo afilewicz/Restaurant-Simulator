@@ -26,8 +26,8 @@ public:
     uint32_t get_num_of_seats() const;
     uint32_t get_free_seats() const;
     void add_client(const Client &client);
-    std::list<Dish>& get_ready_dishes();
-    void add_ready_dish(const Dish dish);
+    std::list<Dish> &get_ready_dishes();
+    void add_ready_order(const ReadyOrder order);
     void place_receipt(const Receipt new_receipt);
     Receipt get_receipt() const;
 

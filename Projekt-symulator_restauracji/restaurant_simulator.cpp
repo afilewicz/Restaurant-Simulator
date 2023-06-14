@@ -79,22 +79,6 @@ void RestaurantSimulator::let_in_one_group_and_place()
         throw NoFreeTableError(first_group.get_clients().size());
 }
 
-// void RestaurantSimulator::let_in_one_group_and_place()
-// {
-//     if (queue_.empty())
-//         throw EmptyQueueError();
-//     ClientGroup first_group = queue_.front();
-//     try
-//     {
-//         Table &table = restaurant_.get_waiter().get_free_table(first_group.get_number_of_clients());
-//         restaurant_.get_waiter().place_at_table(table, first_group);
-//         queue_.pop_front();
-//     }
-//     catch (NoFreeTableError &e)
-//     {
-//         throw NoFreeTableError(first_group.get_clients().size());
-//     }
-// }
 void RestaurantSimulator::make_table_ready(table_id id)
 {
     Table &table = restaurant_.get_table_by_id(id);
@@ -131,13 +115,14 @@ table_id RestaurantSimulator::preaparing_first_order()
     return order.get_table_id();
 }
 
-void RestaurantSimulator::serve_ready_dish(table_id table_id)
+void RestaurantSimulator::serve_ready_order(table_id table_id)
 {
-    // metoda ma brać całe zamównieni, jeżeli jest gotowe
-    for (auto dish : get_restaurant().get_kitchen().get_ready_dishes())
+    for (auto order : get_restaurant().get_kitchen().get_ready_orders())
     {
-        restaurant_.get_table_by_id(table_id).add_ready_dish(std::move(dish));
+        if (order.get_order_id() == table_id)
+            restaurant_.get_table_by_id(table_id).add_ready_order(std::move(order));
     }
+    throw OrderNotFoundError(table_id);
 }
 
 void RestaurantSimulator::bring_receipt_to_table(table_id table_id)
