@@ -7,7 +7,7 @@ void ReadyOrder::add_dish(Dish &&new_dish)
     dishes_.push_back(new_dish);
 }
 
-table_id ReadyOrder::get_order_id()
+table_id ReadyOrder::get_order_id() const
 {
     return table_id_;
 }

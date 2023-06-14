@@ -22,11 +22,15 @@ public:
     std::ostream &show_tables_info(std::ostream &os);
     std::ostream &show_queue_info(std::ostream &os);
     std::ostream &show_menu(std::ostream &os);
+    std::ostream &show_kitchen_info(std::ostream &os);
 
 private:
     Menu load_menu(std::string path_to_file);
     std::map<std::string, time_> load_time_to_prepare(std::string path_to_file);
     void load_tables(std::string path_to_file);
+
+    template <typename List>
+    std::ostream &show_kitchen_info_helper(std::ostream &os, List &list);
 
     Restaurant restaurant_;
     std::deque<ClientGroup> queue_;

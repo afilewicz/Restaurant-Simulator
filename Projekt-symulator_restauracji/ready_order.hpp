@@ -5,7 +5,7 @@ class ReadyOrder
 public:
     ReadyOrder(table_id table_id);
     void add_dish(Dish &&new_dish);
-    table_id get_order_id();
+    table_id get_order_id() const;
     std::list<Dish> &get_dishes();
 
 private:

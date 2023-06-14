@@ -65,3 +65,9 @@ class OrderNotFoundError : public std::invalid_argument
 public:
     OrderNotFoundError(uint32_t id) : std::invalid_argument("Order with given id not found: " + id) {}
 };
+
+class TableNotReadyToOrderError : public std::invalid_argument
+{
+public:
+    TableNotReadyToOrderError(uint32_t id) : std::invalid_argument("Table with given id is not ready to order: " + id) {}
+};

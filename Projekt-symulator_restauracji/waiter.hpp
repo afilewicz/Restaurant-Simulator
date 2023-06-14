@@ -4,7 +4,6 @@
 #include "table.hpp"
 #include "kitchen.hpp"
 #include "client_group.hpp"
-#include "exceptions.hpp"
 
 class Waiter
 {

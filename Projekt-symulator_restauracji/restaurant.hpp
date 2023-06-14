@@ -3,7 +3,7 @@
 #include <map>
 #include <optional>
 #include "waiter.hpp"
-
+#include "exceptions.hpp"
 
 class Kitchen;
 

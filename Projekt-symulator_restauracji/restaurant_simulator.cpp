@@ -98,14 +98,13 @@ void RestaurantSimulator::clean_table(table_id id)
 
 void RestaurantSimulator::take_order_from_table(table_id table_id)
 {
-    // wyjątek
-    if (restaurant_.get_table_by_id(table_id).get_ready_to_order() == true)
+    if (restaurant_.get_table_by_id(table_id).get_ready_to_order())
     {
         restaurant_.get_waiter().take_order(table_id);
         restaurant_.get_table_by_id(table_id).switch_ready_to_order();
     }
     else
-        return;
+        throw TableNotReadyToOrderError(table_id);
 }
 
 table_id RestaurantSimulator::preaparing_first_order()
@@ -194,5 +193,43 @@ std::ostream &RestaurantSimulator::show_menu(std::ostream &os)
         }
     }
     os << "\n";
+    return os;
+}
+
+// template <typename List, typename Order>
+// std::ostream &RestaurantSimulator::show_kitchen_info_helper(std::ostream &os, List &list)
+// {
+//     uint16_t r_counter = 0;
+//     for (auto &order : list)
+//     {
+//         os << "Zamówienie nr " << r_counter << " - stolik nr " << order.get_order_id() << ": \n";
+//         for (auto &dish : order.get_dishes())
+//             os << "   - " << dish.get_name();
+//         ++r_counter;
+//     }
+//     return os;
+// }
+
+std::ostream &RestaurantSimulator::show_kitchen_info(std::ostream &os)
+{
+
+    os << "Zamówienia gotowe: \n";
+    uint16_t r_counter = 0;
+    for (auto &order : restaurant_.get_kitchen().get_ready_orders())
+    {
+        os << "Zamówienie nr " << r_counter << " - stolik nr " << order.get_order_id() << ": \n";
+        for (auto &dish : order.get_dishes())
+            os << "   - " << dish.get_name() << "\n";
+        ++r_counter;
+    }
+    os << "Zamówienia niegotowe: \n";
+    r_counter = 0;
+    for (auto &order : restaurant_.get_kitchen().get_to_do_orders())
+    {
+        os << "Zamówienie nr " << r_counter << " - stolik nr " << order.get_table_id() << ": \n";
+        for (auto &dish : order.get_ordered_dishes())
+            os << "   - " << dish.get_name() << "\n";
+        ++r_counter;
+    }
     return os;
 }
