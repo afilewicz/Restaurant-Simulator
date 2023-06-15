@@ -20,7 +20,7 @@ std::list<Order> &Kitchen::get_to_do_orders()
     return to_do_orders;
 }
 
-void Kitchen::prepairing_order(Order &order)
+void Kitchen::prepare_order(Order &order)
 {
     ReadyOrder ready_order{order.get_table_id()};
     for (auto &menu_item : order.get_ordered_dishes())

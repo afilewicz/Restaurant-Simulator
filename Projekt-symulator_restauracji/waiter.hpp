@@ -7,12 +7,6 @@
 
 class Waiter
 {
-private:
-    std::set<table_id> serviced_tables;
-    Restaurant &restaurant;
-    bool is_busy = false;
-    std::list<Order> accepted_orders;
-    std::list<Receipt> receipts;
 
 public:
     Waiter(Restaurant &);
@@ -31,6 +25,11 @@ public:
     void take_order(table_id);
     void add_receipt(const Receipt Receipt);
     std::optional<Receipt> take_proper_receipt(const Table table);
-};
 
-// problem był z tym że get_free_table musi coś zwracac
+private:
+    std::set<table_id> serviced_tables;
+    Restaurant &restaurant;
+    bool is_busy = false;
+    std::list<Order> accepted_orders;
+    std::list<Receipt> receipts;
+};

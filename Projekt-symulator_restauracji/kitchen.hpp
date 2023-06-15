@@ -22,7 +22,7 @@ public:
     std::list<Dish> &get_ready_dishes();
     std::list<ReadyOrder> &get_ready_orders();
     std::list<Order> &get_to_do_orders();
-    void prepairing_order(Order &order);
+    void prepare_order(Order &order);
     void add_to_do_orders(const Order order);
     // void remove_from_ready_orders(const Order order);
     void set_time_to_prepare(const std::map<std::string, time_> new_time_to_prepare);

@@ -30,6 +30,8 @@ public:
     void add_ready_order(const ReadyOrder order);
     void place_receipt(const Receipt new_receipt);
     Receipt get_receipt() const;
+    void switch_ready_to_be_cleaned();
+    bool get_ready_to_be_cleaned() const;
 
 private:
     table_id id;
@@ -37,6 +39,7 @@ private:
     bool ready_to_order = false;
     std::vector<Client> clients = {};
     bool ready_for_receipt = false;
+    bool ready_to_be_cleaned = false;
     std::list<Order> ready_orders;
     uint32_t number_of_seats_ = 0;
     std::list<Dish> ready_dishes;

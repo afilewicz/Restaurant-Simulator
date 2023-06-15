@@ -71,3 +71,27 @@ class TableNotReadyToOrderError : public std::invalid_argument
 public:
     TableNotReadyToOrderError(uint32_t id) : std::invalid_argument("Table with given id is not ready to order: " + id) {}
 };
+
+class TableNotReadyToPayError : public std::invalid_argument
+{
+public:
+    TableNotReadyToPayError(uint32_t id) : std::invalid_argument("Table with given id is not ready to pay: " + id) {}
+};
+
+class TableNotReadyToBeCleanedError : public std::invalid_argument
+{
+public:
+    TableNotReadyToBeCleanedError(uint32_t id) : std::invalid_argument("Table with given id is not ready to be cleaned: " + id) {}
+};
+
+class NoOrdersToPrepareError : public std::invalid_argument
+{
+public:
+    NoOrdersToPrepareError() : std::invalid_argument("No orders to prepare") {}
+};
+
+class NoClientsInQueueError : public std::invalid_argument
+{
+public:
+    NoClientsInQueueError() : std::invalid_argument("No clients in queue") {}
+};

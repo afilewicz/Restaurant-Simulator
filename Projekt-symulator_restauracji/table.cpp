@@ -84,3 +84,13 @@ Receipt Table::get_receipt() const
 {
     return receipt.value();
 }
+
+void Table::switch_ready_to_be_cleaned()
+{
+    ready_to_be_cleaned = !ready_to_be_cleaned;
+}
+
+bool Table::get_ready_to_be_cleaned() const
+{
+    return ready_to_be_cleaned;
+}

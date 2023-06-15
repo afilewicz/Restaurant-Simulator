@@ -64,13 +64,14 @@ void RestaurantSimulator::let_in_one_group_and_place()
 {
     if (queue_.empty())
     {
-        return;
+        throw NoClientsInQueueError();
     }
     ClientGroup first_group = queue_.front();
     std::optional<Table> table = restaurant_.get_waiter().get_free_table(first_group.get_number_of_clients());
     if (table)
     {
         restaurant_.get_waiter().place_at_table(*table, first_group);
+        make_table_ready(table.value());
         queue_.pop_front();
         restaurant_.remove_table(table.value().get_id());
         restaurant_.add_table(table.value());
@@ -79,9 +80,8 @@ void RestaurantSimulator::let_in_one_group_and_place()
         throw NoFreeTableError(first_group.get_clients().size());
 }
 
-void RestaurantSimulator::make_table_ready(table_id id)
+void RestaurantSimulator::make_table_ready(Table &table)
 {
-    Table &table = restaurant_.get_table_by_id(id);
     for (auto &client : table.get_clients())
     {
         client.make_order(restaurant_.get_menu());
@@ -91,9 +91,14 @@ void RestaurantSimulator::make_table_ready(table_id id)
 
 void RestaurantSimulator::clean_table(table_id id)
 {
-    uint32_t seats = restaurant_.get_table_by_id(id).get_num_of_seats();
-    restaurant_.remove_table(id);
-    restaurant_.add_table(Table{id, seats});
+    if (restaurant_.get_table_by_id(id).get_ready_to_be_cleaned())
+    {
+        uint32_t seats = restaurant_.get_table_by_id(id).get_num_of_seats();
+        restaurant_.remove_table(id);
+        restaurant_.add_table(Table{id, seats});
+    }
+    else
+        throw TableNotReadyToBeCleanedError(id);
 }
 
 void RestaurantSimulator::take_order_from_table(table_id table_id)
@@ -107,11 +112,15 @@ void RestaurantSimulator::take_order_from_table(table_id table_id)
         throw TableNotReadyToOrderError(table_id);
 }
 
-table_id RestaurantSimulator::preaparing_first_order()
+void RestaurantSimulator::prepare_first_order()
 {
-    Order &order = restaurant_.get_kitchen().get_to_do_orders().front();
-    restaurant_.get_kitchen().prepairing_order(order);
-    return order.get_table_id();
+    if (!restaurant_.get_kitchen().get_to_do_orders().empty())
+    {
+        Order &order = restaurant_.get_kitchen().get_to_do_orders().front();
+        restaurant_.get_kitchen().prepare_order(order);
+    }
+    else
+        throw NoOrdersToPrepareError();
 }
 
 void RestaurantSimulator::serve_ready_order(table_id table_id)
@@ -126,8 +135,14 @@ void RestaurantSimulator::serve_ready_order(table_id table_id)
 
 void RestaurantSimulator::bring_receipt_to_table(table_id table_id)
 {
-    restaurant_.get_waiter().give_receipt(restaurant_.get_table_by_id(table_id));
-    restaurant_.get_table_by_id(table_id).switch_ready_for_receipt();
+    if (restaurant_.get_table_by_id(table_id).get_ready_for_receipt())
+    {
+        restaurant_.get_waiter().give_receipt(restaurant_.get_table_by_id(table_id));
+        restaurant_.get_table_by_id(table_id).switch_ready_to_be_cleaned();
+    }
+    else
+        throw TableNotReadyToPayError(table_id);
+    // restaurant_.get_table_by_id(table_id).switch_ready_for_receipt();
 }
 
 table_id RestaurantSimulator::drawn_id()
@@ -140,7 +155,7 @@ table_id RestaurantSimulator::drawn_id()
 
 std::ostream &RestaurantSimulator::show_tables_info(std::ostream &os)
 {
-    os << "Stoliki: " << std::endl;
+    os << "\nStoliki: " << std::endl;
     for (const auto &[id, table] : restaurant_.get_tables())
     {
         auto free_seats = table.get_free_seats();
@@ -149,6 +164,7 @@ std::ostream &RestaurantSimulator::show_tables_info(std::ostream &os)
            << free_seats << "/" << table.get_num_of_seats()
            << ", gotowy do zamówienia: " << table.get_ready_to_order()
            << ", gotowy do rachunku: " << table.get_ready_for_receipt()
+           << ", gotowy do sprzątania: " << table.get_ready_to_be_cleaned()
            << '\n';
     }
     os << "\n";
@@ -159,12 +175,12 @@ std::ostream &RestaurantSimulator::show_queue_info(std::ostream &os)
 {
     if (queue_.empty())
     {
-        os << "Kolejka jest pusta."
+        os << "\nKolejka jest pusta."
            << "\n"
            << "\n";
         return os;
     }
-    os << "Klienci w kolejce: " << std::endl;
+    os << "\nKlienci w kolejce: " << std::endl;
     uint16_t counter = 1;
     for (const auto &group : queue_)
     {
@@ -178,7 +194,7 @@ std::ostream &RestaurantSimulator::show_queue_info(std::ostream &os)
 
 std::ostream &RestaurantSimulator::show_menu(std::ostream &os)
 {
-    os << "Menu: " << std::endl;
+    os << "\nMenu: " << std::endl;
     for (MenuSection menu_section : restaurant_.get_menu().get_menu_sections())
     {
         os << '\n';
@@ -212,24 +228,38 @@ std::ostream &RestaurantSimulator::show_menu(std::ostream &os)
 
 std::ostream &RestaurantSimulator::show_kitchen_info(std::ostream &os)
 {
-
-    os << "Zamówienia gotowe: \n";
-    uint16_t r_counter = 0;
-    for (auto &order : restaurant_.get_kitchen().get_ready_orders())
+    if (!restaurant_.get_kitchen().get_ready_orders().empty())
     {
-        os << "Zamówienie nr " << r_counter << " - stolik nr " << order.get_order_id() << ": \n";
-        for (auto &dish : order.get_dishes())
-            os << "   - " << dish.get_name() << "\n";
-        ++r_counter;
+        os << "\nZamówienia gotowe: \n";
+        uint16_t r_counter = 0;
+        for (auto &order : restaurant_.get_kitchen().get_ready_orders())
+        {
+            os << "\nZamówienie nr " << r_counter << " - stolik nr " << order.get_order_id() << ": \n";
+            for (auto &dish : order.get_dishes())
+                os << "   - " << dish.get_name() << "\n";
+            ++r_counter;
+        }
     }
-    os << "Zamówienia niegotowe: \n";
-    r_counter = 0;
-    for (auto &order : restaurant_.get_kitchen().get_to_do_orders())
+    else
     {
-        os << "Zamówienie nr " << r_counter << " - stolik nr " << order.get_table_id() << ": \n";
-        for (auto &dish : order.get_ordered_dishes())
-            os << "   - " << dish.get_name() << "\n";
-        ++r_counter;
+        os << "\nBrak gotowych zamówień.\n";
+    }
+    os << "\nZamówienia niegotowe: \n";
+
+    if (!restaurant_.get_kitchen().get_to_do_orders().empty())
+    {
+        uint16_t r_counter = 0;
+        for (auto &order : restaurant_.get_kitchen().get_to_do_orders())
+        {
+            os << "\nZamówienie nr " << r_counter << " - stolik nr " << order.get_table_id() << ": \n";
+            for (auto &dish : order.get_ordered_dishes())
+                os << "   - " << dish.get_name() << "\n";
+            ++r_counter;
+        }
+    }
+    else
+    {
+        os << "\nBrak zamówień do przygotowania.\n";
     }
     return os;
 }
