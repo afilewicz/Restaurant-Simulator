@@ -129,11 +129,12 @@ void RestaurantSimulator::serve_ready_order(table_id table_id)
     {
         if (order.get_order_id() == table_id)
         {
+            restaurant_.get_table_by_id(table_id).add_ready_order(order);
             restaurant_.get_kitchen().remove_ready_order(table_id);
             restaurant_.get_table_by_id(table_id).switch_ready_for_receipt();
         }
     }
-    // throw OrderNotFoundError(table_id);
+    throw OrderNotFoundError(table_id);
 }
 
 void RestaurantSimulator::bring_receipt_to_table(table_id table_id)
