@@ -5,19 +5,27 @@
 
 uint16_t ask_for_number_of_group_of_clients()
 {
-    uint16_t num_of_clients;
+    std::string num_of_clients;
     while (true)
     {
         std::cout << "\nWprowadź liczbę grup gości których zamierzasz obsłużyć: (1-10) ";
-        std::cin >> num_of_clients;
-        if (num_of_clients <= 0 || num_of_clients > 10)
+        try
         {
-            std::cout << "Wprowadź liczbę z przediału 1-10." << std::endl;
+            getline(std::cin, num_of_clients);
+            if (std::stoi(num_of_clients) <= 0 || std::stoi(num_of_clients) > 10)
+            {
+                std::cout << "Wprowadź liczbę z przediału 1-10." << std::endl;
+                continue;
+            }
+            break;
+        }
+        catch (const std::invalid_argument &e)
+        {
+            std::cout << "Wprowadzono błędną wartość \n";
             continue;
         }
-        break;
     }
-    return num_of_clients;
+    return stoi(num_of_clients);
 }
 
 void print_instruction()
@@ -34,6 +42,7 @@ void print_instruction()
     std::cout << "r - przynieś rachunek do stolika\n";
     std::cout << "c - posprzątaj stolik\n";
     std::cout << "i - wyświetl listę poleceń\n";
+    std::cout << "x - wyjdź z programu\n";
 }
 
 void print_intro()
@@ -52,6 +61,7 @@ int main()
     print_instruction();
     while (true)
     {
+        // chceck_if_end(simulator);
         char instr;
         std::cout << "\nWprowadź polecenie: ";
         std::cin >> instr;
@@ -114,6 +124,16 @@ int main()
                     std::cout << "Stolik o danym numerze nie jest gotowy do przyjmowania zamówień. \nWprowadź inną liczbę lub 'q' aby wyjść.\n";
                     continue;
                 }
+                catch (const std::out_of_range &e)
+                {
+                    std::cout << "Nie znaleziono stolika o podanym numerze.\n";
+                    continue;
+                }
+                catch (const std::invalid_argument &e)
+                {
+                    std::cout << "\nWprowadzono błędną wartość\n";
+                    continue;
+                }
             }
         }
         else if (instr == 's')
@@ -128,11 +148,17 @@ int main()
                 try
                 {
                     simulator.serve_ready_order(std::stoi(id));
+                    std::cout << "Zamówienie zostało dostarczone do stolika\n";
                     break;
                 }
                 catch (const OrderNotFoundError &e)
                 {
                     std::cout << "Nie odnaleziono zamówienia dla podanego stolika. \nWprowadź inną liczbę lub 'q' aby wyjść.\n";
+                    continue;
+                }
+                catch (const std::invalid_argument &e)
+                {
+                    std::cout << "\nWprowadzono błędną wartość\n";
                     continue;
                 }
             }
@@ -154,7 +180,17 @@ int main()
                 }
                 catch (const TableNotReadyToPayError &e)
                 {
-                    std::cout << "Stolik o danym numerze nie jest gotowy do zapłaty. \nWprowadź inną liczbę lub 'q' aby wyjść.\n";
+                    std::cout << "\nStolik o danym numerze nie jest gotowy do zapłaty. \nWprowadź inną liczbę lub 'q' aby wyjść.\n";
+                    continue;
+                }
+                catch (const std::out_of_range &e)
+                {
+                    std::cout << "\nNie odnaleziono stolika o podanym numerze \n";
+                    continue;
+                }
+                catch (const std::invalid_argument &e)
+                {
+                    std::cout << "\nWprowadzono błędną wartość\n";
                     continue;
                 }
             }
@@ -176,6 +212,16 @@ int main()
                 catch (const TableNotReadyToBeCleanedError &e)
                 {
                     std::cout << "Stolik o danym numerze nie jest gotowy do sprzątania. \nWprowadź inną liczbę lub 'q' aby wyjść.\n";
+                    continue;
+                }
+                catch (const std::invalid_argument &e)
+                {
+                    std::cout << "\nWprowadzono błędną wartość\n";
+                    continue;
+                }
+                catch (const std::out_of_range &e)
+                {
+                    std::cout << "\nNie odnaleziono stolika o podanym numerze \n";
                     continue;
                 }
             }

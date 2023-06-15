@@ -18,6 +18,7 @@ public:
     void prepare_first_order();
     void serve_ready_order(table_id table_id);
     void bring_receipt_to_table(table_id table_id);
+    // void check_if_end();
     table_id drawn_id();
     std::ostream &show_tables_info(std::ostream &os);
     std::ostream &show_queue_info(std::ostream &os);

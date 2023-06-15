@@ -151,6 +151,11 @@ void RestaurantSimulator::bring_receipt_to_table(table_id table_id)
     // restaurant_.get_table_by_id(table_id).switch_ready_for_receipt();
 }
 
+// void RestaurantSimulator::check_if_end()
+// {
+//     if (queue_.empty() and
+// }
+
 table_id RestaurantSimulator::drawn_id()
 {
     std::random_device rd;
