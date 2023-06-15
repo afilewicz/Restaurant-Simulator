@@ -69,7 +69,7 @@ std::list<Dish> &Table::get_ready_dishes()
     return ready_dishes;
 }
 
-void Table::add_ready_order(ReadyOrder order)
+void Table::add_ready_order(ReadyOrder &order)
 {
     for (const auto &dish : order.get_dishes())
         ready_dishes.push_back(dish);

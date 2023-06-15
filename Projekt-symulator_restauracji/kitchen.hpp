@@ -26,4 +26,5 @@ public:
     void add_to_do_orders(const Order order);
     // void remove_from_ready_orders(const Order order);
     void set_time_to_prepare(const std::map<std::string, time_> new_time_to_prepare);
+    void remove_ready_order(const Order &order);
 };

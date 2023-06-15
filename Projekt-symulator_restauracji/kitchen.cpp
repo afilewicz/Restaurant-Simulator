@@ -39,10 +39,17 @@ void Kitchen::add_to_do_orders(const Order order)
     to_do_orders.push_back(order);
 }
 
-// void Kitchen::remove_from_ready_orders(const Order order)
-// {
-//     ready_orders.remove(order);
-// }
+void Kitchen::remove_ready_order(const Order &order)
+{
+    for (auto it = ready_orders.begin(); it != ready_orders.end(); ++it)
+    {
+        if (it->get_order_id() == order.get_table_id())
+        {
+            ready_orders.erase(it);
+            return;
+        }
+    }
+}
 
 void Kitchen::set_time_to_prepare(const std::map<std::string, time_> new_time_to_prepare)
 {

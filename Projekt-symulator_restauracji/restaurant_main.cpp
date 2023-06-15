@@ -30,6 +30,7 @@ void print_instruction()
     std::cout << "e - zaproś jedną grupę klientów do restauracji\n";
     std::cout << "o - przyjmij zamówienie od stolika\n";
     std::cout << "p - przygotuj pierwsze z listy zamówienie\n";
+    std::cout << "s - zaserwuj gotowe zamówienie do stolika\n";
     std::cout << "r - przynieś rachunek do stolika\n";
     std::cout << "c - posprzątaj stolik\n";
     std::cout << "i - wyświetl listę poleceń\n";
@@ -84,7 +85,6 @@ int main()
         {
             try
             {
-                std::cout << "\nPierwsze zamówienie z listy jest przygotowywame. \n";
                 simulator.prepare_first_order();
                 std::cout << "Zamówienie zostało przygotowane. \n";
             }
@@ -106,6 +106,7 @@ int main()
                 try
                 {
                     simulator.take_order_from_table(std::stoi(id));
+                    std::cout << "Zebrano zamówienie. \n";
                     break;
                 }
                 catch (const TableNotReadyToOrderError &e)
