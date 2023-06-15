@@ -153,7 +153,7 @@ void RestaurantSimulator::bring_receipt_to_table(table_id table_id)
 
 bool RestaurantSimulator::check_if_end()
 {
-    return (queue_.empty() and restaurant_.empty_tables());
+    return (queue_.empty() && restaurant_.empty_tables());
 }
 
 table_id RestaurantSimulator::drawn_id()

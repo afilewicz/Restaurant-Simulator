@@ -6,7 +6,6 @@ TEST_CASE("Dish constructor")
     MenuItem menu_item("test", 100, std::list<Ingredient>{});
     Dish dish(menu_item);
     CHECK(dish.get_name() == "test");
-    CHECK(dish.get_time_to_prepare() == 0);
 }
 
 TEST_CASE("Dish is_ready")

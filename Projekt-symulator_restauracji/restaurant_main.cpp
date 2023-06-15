@@ -59,13 +59,8 @@ int main()
     uint8_t num_of_clients = ask_for_number_of_group_of_clients();
     simulator.add_clients_to_queue(num_of_clients);
     print_instruction();
-    while (true)
+    while (!simulator.check_if_end())
     {
-        if (simulator.check_if_end())
-        {
-            std::cout << "\nKoniec symulacji. \n";
-            break;
-        }
         char instr;
         std::cout << "\nWprowadź polecenie: ";
         std::cin >> instr;
@@ -238,5 +233,6 @@ int main()
         else
             std::cout << "Nieznane polecenie. Spróbuj ponownie.\n";
     }
+    std::cout << "Koniec symulacji. \n";
     return 0;
 };

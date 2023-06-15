@@ -8,10 +8,10 @@ TEST_CASE("Waiter constructor")
     Restaurant restaurant("test_restaurant");
     Menu menu = {};
     std::map<uint32_t, Table> tables = std::map<uint32_t, Table>{
-        {0, Table{4}},
-        {1, Table{3}},
-        {2, Table{2}},
-        {3, Table{6}},
+        {0, Table{0, 4}},
+        {1, Table{1, 3}},
+        {2, Table{2, 2}},
+        {3, Table{3, 6}},
     };
     Waiter waiter{restaurant};
     Kitchen kitchen{restaurant};
@@ -23,10 +23,6 @@ TEST_CASE("Waiter constructor")
     SECTION("get_free_table")
     {
         Table table = restaurant.get_table_by_id(2);
-        //CHECK(waiter.get_free_table(4) == std::optional<Table>(table));
-        /*CHECK(waiter.get_free_table(4) != std::nullopt);
-        CHECK(waiter.get_free_table(5) != std::nullopt);
-        CHECK(waiter.get_free_table(10) == std::nullopt);*/
     };
 
     SECTION("get_serviced_tables")
