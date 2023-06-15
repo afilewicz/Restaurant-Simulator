@@ -61,7 +61,11 @@ int main()
     print_instruction();
     while (true)
     {
-        // chceck_if_end(simulator);
+        if (simulator.check_if_end())
+        {
+            std::cout << "\nKoniec symulacji. \n";
+            break;
+        }
         char instr;
         std::cout << "\nWprowadź polecenie: ";
         std::cin >> instr;
@@ -207,6 +211,7 @@ int main()
                 try
                 {
                     simulator.clean_table(std::stoi(id));
+                    std::cout << "Stolik został posprzątany. \n";
                     break;
                 }
                 catch (const TableNotReadyToBeCleanedError &e)

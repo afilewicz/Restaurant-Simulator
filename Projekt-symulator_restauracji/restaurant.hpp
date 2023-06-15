@@ -28,6 +28,7 @@ public:
     void set_waiter(Waiter &waiter);
     void set_menu(Menu &menu);
     void set_tables(const std::map<table_id, Table> &tables);
+    bool empty_tables();
 
 private:
     std::string name_;

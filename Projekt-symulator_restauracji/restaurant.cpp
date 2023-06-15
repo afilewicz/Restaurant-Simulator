@@ -61,3 +61,13 @@ void Restaurant::set_tables(const std::map<table_id, Table> &new_tables)
 {
     tables = new_tables;
 }
+
+bool Restaurant::empty_tables()
+{
+    for (auto &[id, table] : tables)
+    {
+        if (!table.get_clients().empty())
+            return false;
+    }
+    return true;
+}
