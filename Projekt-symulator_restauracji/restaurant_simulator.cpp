@@ -132,6 +132,7 @@ void RestaurantSimulator::serve_ready_order(table_id table_id)
             restaurant_.get_table_by_id(table_id).add_ready_order(order);
             restaurant_.get_kitchen().remove_ready_order(table_id);
             restaurant_.get_table_by_id(table_id).switch_ready_for_receipt();
+            return;
         }
     }
     throw OrderNotFoundError(table_id);
@@ -142,6 +143,7 @@ void RestaurantSimulator::bring_receipt_to_table(table_id table_id)
     if (restaurant_.get_table_by_id(table_id).get_ready_for_receipt())
     {
         restaurant_.get_waiter().give_receipt(restaurant_.get_table_by_id(table_id));
+        restaurant_.get_table_by_id(table_id).switch_ready_for_receipt();
         restaurant_.get_table_by_id(table_id).switch_ready_to_be_cleaned();
     }
     else

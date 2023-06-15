@@ -149,6 +149,7 @@ int main()
                 try
                 {
                     simulator.bring_receipt_to_table(std::stoi(id));
+                    simulator.get_restaurant().get_table_by_id(std::stoi(id)).get_receipt().show_receipt(os);
                     break;
                 }
                 catch (const TableNotReadyToPayError &e)
