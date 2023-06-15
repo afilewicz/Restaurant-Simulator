@@ -11,7 +11,6 @@ class Waiter
 public:
     Waiter(Restaurant &);
     Restaurant &get_restaurant();
-    // std::optional<Table> get_free_table(uint32_t number_of_seats);
     Table &get_free_table(uint32_t number_of_seats);
     std::set<table_id> get_serviced_tables() const;
     bool get_is_busy() const;

@@ -148,7 +148,6 @@ void RestaurantSimulator::bring_receipt_to_table(table_id table_id)
     }
     else
         throw TableNotReadyToPayError(table_id);
-    // restaurant_.get_table_by_id(table_id).switch_ready_for_receipt();
 }
 
 bool RestaurantSimulator::check_if_end()
@@ -222,20 +221,6 @@ std::ostream &RestaurantSimulator::show_menu(std::ostream &os)
     os << "\n";
     return os;
 }
-
-// template <typename List, typename Order>
-// std::ostream &RestaurantSimulator::show_kitchen_info_helper(std::ostream &os, List &list)
-// {
-//     uint16_t r_counter = 0;
-//     for (auto &order : list)
-//     {
-//         os << "Zamówienie nr " << r_counter << " - stolik nr " << order.get_order_id() << ": \n";
-//         for (auto &dish : order.get_dishes())
-//             os << "   - " << dish.get_name();
-//         ++r_counter;
-//     }
-//     return os;
-// }
 
 std::ostream &RestaurantSimulator::show_kitchen_info(std::ostream &os)
 {

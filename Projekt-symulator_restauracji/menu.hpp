@@ -14,7 +14,5 @@ public:
 
 private:
     bool is_menu_section_in_menu(std::string menu_section_name);
-
-    // std::string name_;
     std::list<MenuSection> menu_sections_;
 };

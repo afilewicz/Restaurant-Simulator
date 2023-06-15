@@ -21,7 +21,6 @@ public:
     void switch_ready_to_order();
     std::vector<Client> &get_clients();
     bool get_ready_for_receipt() const;
-    void get_ready_dishes() const;
     void switch_ready_for_receipt();
     uint32_t get_num_of_seats() const;
     uint32_t get_free_seats() const;
@@ -44,5 +43,4 @@ private:
     uint32_t number_of_seats_ = 0;
     std::list<Dish> ready_dishes;
     std::optional<Receipt> receipt = std::nullopt;
-    // stawianie na stół dań i rachunku
 };

@@ -45,33 +45,6 @@ void Waiter::place_at_table(Table &table, ClientGroup group)
     }
 }
 
-// void Waiter::look_for_action()
-// {
-//     for (auto id : serviced_tables)
-//     {
-//         if (get_restaurant().get_table_by_id(id).get_ready_to_order())
-//         {
-//             take_order(id);
-//         }
-//         if (get_restaurant().get_table_by_id(id).get_ready_for_receipt())
-//         {
-//             Order &&order = find_order_by_table_id(id).value();
-//             give_receipt(get_restaurant().get_table_by_id(id));
-//             get_restaurant().get_table_by_id(id).switch_is_occupied();
-//             serviced_tables.erase(id);
-//         }
-//     }
-// }
-
-// void Waiter::search_ready_order()
-// {
-//     for (auto &order : get_restaurant().get_kitchen().get_ready_orders())
-//     {
-//         Table &table = get_restaurant().get_table_by_id(order.get_table_id());
-//         // table.add_ready_order(std::move(order));
-//     }
-// }
-
 std::list<Order> &Waiter::get_accepted_orders()
 {
     return accepted_orders;

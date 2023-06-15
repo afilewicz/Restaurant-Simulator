@@ -94,6 +94,8 @@ int main()
         {
             try
             {
+                if (!simulator.get_restaurant().get_kitchen().get_to_do_orders().empty())
+                    std::cout << "Przygotowywanie zamówienia... \n \n";
                 simulator.prepare_first_order();
                 std::cout << "Zamówienie zostało przygotowane. \n";
             }

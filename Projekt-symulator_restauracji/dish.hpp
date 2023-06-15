@@ -7,7 +7,6 @@
 class Dish
 {
 private:
-    // baza danych czytana z pliku
     std::string name;
     bool is_ready;
 
